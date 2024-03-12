@@ -3,6 +3,7 @@ import Searchbar from "./Searchbar";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
 import NavLinks from "./NavLinks";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -13,10 +14,13 @@ const Header = () => {
             <h1>Ecommerce App</h1>
             <Searchbar />
             <div className="flex gap-8">
-              <div className="flex items-center gap-1">
+              <Link
+                href={"/auth"}
+                className="flex items-center gap-1 hover:text-orange-500"
+              >
                 <MdOutlineAccountCircle className="text-3xl" />
                 <p>Konto</p>
-              </div>
+              </Link>
               <div className="flex items-center gap-1">
                 <FiShoppingCart className="text-2xl" />
                 <p>Koszyk</p>
