@@ -8,11 +8,9 @@ import Footer from "./components/Footer/Footer";
 export default function Home() {
   return (
     <div>
-      <Header />
       <ShopList />
       <PopularProducts />
       <DiscountCodeElement />
-      <Footer />
     </div>
   );
 }
