@@ -1,27 +1,26 @@
+import Image from "next/image";
 import Wrapper from "../Wrapper";
+import Biedronka from "@/public/images/biedronka.jpg";
+import Lidl from "@/public/images/lidl.jpg";
+import Kaufland from "@/public/images/kaufland.jpg";
+import Link from "next/link";
 
 const ShopList = () => {
   const tmpShops = [
     {
       id: 1,
-      name: "Shop 1",
-      location: "Location 1",
-      description: "Description 1",
-      image: "Image 1",
+      name: "biedronka",
+      image: Biedronka,
     },
     {
       id: 2,
-      name: "Shop 2",
-      location: "Location 2",
-      description: "Description 2",
-      image: "Image 2",
+      name: "lidl",
+      image: Lidl,
     },
     {
       id: 3,
-      name: "Shop 3",
-      location: "Location 3",
-      description: "Description 3",
-      image: "Image 3",
+      name: "kaufland",
+      image: Kaufland,
     },
   ];
 
@@ -30,10 +29,16 @@ const ShopList = () => {
       <h3 className="pt-24">Dostępne sklepy</h3>
       <div className="pt-8 flex justify-around">
         {tmpShops.map((shop) => (
-          <div key={shop.id}>
-            <p>{shop.name}</p>
-            <p>{shop.location}</p>
-            <p>{shop.description}</p>
+          <div key={shop.id} className="relative">
+            <Link href={`/categories/${shop.name}`} className="cursor-pointer">
+              <Image
+                width={350}
+                className="rounded-2xl"
+                src={shop.image}
+                alt="Shop"
+              />
+              <div className="absolute inset-0 bg-black opacity-0 rounded-2xl transition-opacity hover:opacity-40" />
+            </Link>
           </div>
         ))}
       </div>
