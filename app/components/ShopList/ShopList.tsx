@@ -27,8 +27,8 @@ const ShopList = () => {
 
   return (
     <Wrapper>
-      <h3>Dostępne sklepy</h3>
-      <div className="flex justify-around">
+      <h3 className="pt-24">Dostępne sklepy</h3>
+      <div className="pt-8 flex justify-around">
         {tmpShops.map((shop) => (
           <div key={shop.id}>
             <p>{shop.name}</p>

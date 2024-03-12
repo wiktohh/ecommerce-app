@@ -41,7 +41,7 @@ const PopularProducts = () => {
 
   return (
     <Wrapper>
-      <div>
+      <div className="pt-24">
         <h3>Najpopularniejsze produkty</h3>
         <p className="text-gray-400">wybierane przez klientow</p>
       </div>

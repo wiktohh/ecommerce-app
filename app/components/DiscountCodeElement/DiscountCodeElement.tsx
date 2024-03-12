@@ -1,6 +1,6 @@
 const DiscountCodeElement = () => {
   return (
-    <div className="bg-gray-300 text-black text-center p-1">
+    <div className="my-24 bg-gray-300 text-black text-center p-1">
       Odbierz darmową dostawę. Użyj kodu{" "}
       <span className="font-bold text-orange-600">FREEDELIVERY24</span> w
       koszyku!
