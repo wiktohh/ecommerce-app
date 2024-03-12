@@ -6,7 +6,7 @@ import NavLinks from "./NavLinks";
 
 const Header = () => {
   return (
-    <header className="w-full h-full bg-red-400">
+    <header className="w-full h-full bg-orange-100">
       <Wrapper>
         <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between items-center">

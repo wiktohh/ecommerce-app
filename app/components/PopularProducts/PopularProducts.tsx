@@ -47,7 +47,7 @@ const PopularProducts = () => {
       </div>
       <Slider {...settings}>
         {temporaryProducts.map((product) => (
-          <div className="bg-black" key={product.id}>
+          <div key={product.id}>
             <img src={product.image} alt={product.name} />
             <p>{product.name}</p>
             <p>{product.price}</p>

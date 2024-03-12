@@ -84,7 +84,7 @@ const Footer = () => {
 
   return (
     <Wrapper>
-      <footer className="">
+      <footer className="pb-12">
         <div>
           <div className="flex">
             <div className="w-1/2">
@@ -102,7 +102,11 @@ const Footer = () => {
                   <h6 className="mb-4 font-semibold">{item.title}</h6>
                   <ul className="flex flex-col">
                     {item.links.map((link, idx) => (
-                      <Link href={link.url} key={idx}>
+                      <Link
+                        className="hover:text-red-500"
+                        href={link.url}
+                        key={idx}
+                      >
                         {link.name}
                       </Link>
                     ))}

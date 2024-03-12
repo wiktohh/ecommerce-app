@@ -8,7 +8,7 @@ const NavLinks = () => {
         {navLinks.map((link, idx) => (
           <li key={idx}>
             <Link href={link.path}>
-              <span className="p-1 hover:border-b-2 border-red-500">
+              <span className="p-1 hover:border-b-2 hover:text-red-500 border-red-500">
                 {link.name}
               </span>
             </Link>
