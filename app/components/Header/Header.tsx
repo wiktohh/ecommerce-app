@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="w-full h-full bg-red-400">
       <Wrapper>
-        <div className="w-full flex flex-col justify-between p-4">
+        <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between items-center">
             <h1>Ecommerce App</h1>
             <Searchbar />
