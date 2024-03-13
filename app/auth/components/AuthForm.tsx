@@ -31,7 +31,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      router.push("/home");
+      router.push("/");
     }
   }, [session.status]);
 
@@ -44,7 +44,7 @@ const AuthForm = () => {
           if (cb?.error) {
             toast.error(cb.error);
           } else if (cb?.ok) {
-            router.push("/home");
+            router.back();
           }
         })
         .finally(() => {
@@ -58,7 +58,7 @@ const AuthForm = () => {
           if (cb?.error) {
             toast.error(`An error occurred`);
           } else if (cb?.ok) {
-            router.push("/home");
+            router.back();
           }
         })
         .catch((err) => {
