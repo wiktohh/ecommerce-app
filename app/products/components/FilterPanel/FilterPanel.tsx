@@ -8,12 +8,16 @@ const FilterPanel = () => {
   const searchParams = useSearchParams();
   const param = searchParams.get("category");
   const [filter, setFilter] = useState([param]);
+  const [priceSort, setPriceSort] = useState("asc");
 
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement>,
     value: string
   ) => {
-    if (e.target.checked) {
+    if (e.target.type === "radio") {
+      setPriceSort(value);
+      return;
+    } else if (!filter.includes(value)) {
       setFilter([...filter, value]);
     } else {
       setFilter(filter.filter((f) => f !== value));
@@ -22,7 +26,8 @@ const FilterPanel = () => {
 
   useEffect(() => {
     console.log(filter);
-  }, [filter]);
+    console.log(priceSort);
+  }, [filter, priceSort]);
 
   return (
     <div className="w-1/6">
@@ -33,7 +38,11 @@ const FilterPanel = () => {
             <div key={option.value} className="flex gap-2">
               <input
                 name={filterOption.value}
-                checked={filter.includes(option.value)}
+                checked={
+                  filterOption.type === "checkbox"
+                    ? filter.includes(option.value)
+                    : priceSort === option.value
+                }
                 onChange={(e) => handleFilter(e, option.value)}
                 type={filterOption.type}
                 value={option.value}

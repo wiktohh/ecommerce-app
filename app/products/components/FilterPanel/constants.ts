@@ -9,15 +9,6 @@ export const filterOptions = [
     ],
   },
   {
-    type: "radio",
-    label: "Name",
-    value: "Name",
-    options: [
-      { label: "A to Z", value: "asc" },
-      { label: "Z to A", value: "desc" },
-    ],
-  },
-  {
     type: "checkbox",
     label: "Category",
     value: "category",
