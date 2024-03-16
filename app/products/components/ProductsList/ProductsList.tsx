@@ -3,14 +3,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "./Product";
 import { collectGenerateParams } from "next/dist/build/utils";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchProducts = async () => {
-      setIsLoading(true);
       const response = await axios.get("/api/products");
       const data = await response.data;
       setProducts(data);
@@ -24,7 +25,9 @@ const ProductsList = () => {
       <h2>Lista produktów: </h2>
       <div>
         {isLoading ? (
-          <div>Loading</div>
+          <div className="flex justify-center items-center">
+            <LoadingSpinner />
+          </div>
         ) : (
           <div className="flex flex-wrap gap-16">
             {products.map((product, idx) => (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Wrapper from "../Wrapper";
 import ProductsSlider from "./ProductsSlider";
 import axios from "axios";
+import LoadingSpinner from "../LoadingSpinner";
 
 const PopularProducts = () => {
   const [products, setProducts] = useState([]);
@@ -27,7 +28,9 @@ const PopularProducts = () => {
         <p className="text-gray-400">wybierane przez klientow</p>
       </div>
       {isLoading ? (
-        <span>Loading...</span>
+        <div className="flex justify-center items-center">
+          <LoadingSpinner />
+        </div>
       ) : (
         <ProductsSlider products={products} />
       )}
