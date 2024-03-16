@@ -7,7 +7,17 @@ import Button from "@/app/components/Button";
 import Select from "@/app/components/Select";
 import { itemsPerPageOptions } from "./constants";
 
-const ProductsList = () => {
+interface ProductListProps {
+  priceSort: "asc" | "desc";
+  categories: (string | null)[];
+  shops: (string | null)[];
+}
+
+const ProductsList: React.FC<ProductListProps> = ({
+  priceSort,
+  categories,
+  shops,
+}) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,16 +28,20 @@ const ProductsList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log("shops", shops.join("-"));
+      console.log("categories", categories.join("-"));
       const response = await axios.get(
-        `/api/products?page=${currentPage}&limit=${itemsPerPage}`
+        `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
+          "-"
+        )}&category=${categories.join("-")}`
       );
       const data = await response.data;
-      setProducts(data.popularProducts);
+      setProducts(data.products);
       setTotalProducts(data.productsLength);
       setIsLoading(false);
     };
     fetchProducts();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, priceSort, categories, shops]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -62,6 +76,10 @@ const ProductsList = () => {
         {isLoading ? (
           <div className="flex justify-center items-center">
             <LoadingSpinner />
+          </div>
+        ) : products.length === 0 ? (
+          <div>
+            <h3 className="text-xl text-center">Brak produktów</h3>
           </div>
         ) : (
           <>

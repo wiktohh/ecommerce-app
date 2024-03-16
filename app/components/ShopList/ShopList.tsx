@@ -31,7 +31,7 @@ const ShopList = () => {
         {tmpShops.map((shop) => (
           <div key={shop.id} className="relative">
             <Link
-              href={`/products?category=${shop.name}`}
+              href={`/products?shop=${shop.name}`}
               className="cursor-pointer"
             >
               <Image

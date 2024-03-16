@@ -3,31 +3,59 @@ import Button from "@/app/components/Button";
 import { filterOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PriceSort } from "../../page";
 
-const FilterPanel = () => {
+interface FilterPanelProps {
+  changePriceSort: (value: PriceSort) => void;
+  priceSort: PriceSort;
+  categories: (string | null)[];
+  shops: (string | null)[];
+  onFilterChange: (
+    categories: (string | null)[],
+    shops: (string | null)[]
+  ) => void;
+}
+
+const FilterPanel: React.FC<FilterPanelProps> = ({
+  changePriceSort,
+  priceSort,
+  onFilterChange,
+}) => {
+  const shopsOptions = ["biedronka", "lidl", "kaufland"];
+
+  const [categories, setCategories] = useState<(string | null)[]>([]);
+  const [shops, setShops] = useState<(string | null)[]>([]);
+
   const searchParams = useSearchParams();
-  const param = searchParams.get("category");
-  const [filter, setFilter] = useState([param]);
-  const [priceSort, setPriceSort] = useState("asc");
+  const categoryFromParameter = searchParams.get("category");
+  const shopFromParameter = searchParams.get("shop");
 
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    value: string | PriceSort
   ) => {
-    if (e.target.type === "radio") {
-      setPriceSort(value);
+    if ((e.target.type === "radio" && value === "asc") || value === "desc") {
+      changePriceSort(value);
       return;
-    } else if (!filter.includes(value)) {
-      setFilter([...filter, value]);
+    } else if (shopsOptions.includes(value)) {
+      if (shops.includes(value)) {
+        setShops(shops.filter((shop) => shop !== value));
+      } else {
+        setShops([...shops, value]);
+      }
     } else {
-      setFilter(filter.filter((f) => f !== value));
+      if (categories.includes(value)) {
+        setCategories(categories.filter((category) => category !== value));
+      } else {
+        setCategories([...categories, value]);
+      }
     }
   };
 
   useEffect(() => {
-    console.log(filter);
+    console.log(categories);
     console.log(priceSort);
-  }, [filter, priceSort]);
+  }, [categories, priceSort]);
 
   return (
     <div className="w-1/6">
@@ -40,7 +68,10 @@ const FilterPanel = () => {
                 name={filterOption.value}
                 checked={
                   filterOption.type === "checkbox"
-                    ? filter.includes(option.value)
+                    ? categories.includes(option.value) ||
+                      shops.includes(option.value) ||
+                      categoryFromParameter === option.value ||
+                      shopFromParameter === option.value
                     : priceSort === option.value
                 }
                 onChange={(e) => handleFilter(e, option.value)}
@@ -54,7 +85,10 @@ const FilterPanel = () => {
         </div>
       ))}
       <div className="w-1/2 my-4">
-        <Button fullWidth={true}>
+        <Button
+          fullWidth={true}
+          onClick={() => onFilterChange(categories, shops)}
+        >
           <span className="text-base">Filtruj</span>
         </Button>
       </div>

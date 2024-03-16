@@ -5,7 +5,7 @@ export const products = [
     image: "https://piekarniapajda.pl/wp-content/uploads/2020/03/oliwski.png",
     price: 2.5,
     category: "bread",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Jabłka",
@@ -13,7 +13,7 @@ export const products = [
     image: "https://e7.pngegg.com/pngimages/14/397/png-clipart-apple-apple.png",
     price: 3.0,
     category: "fruits",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Marchewki",
@@ -22,7 +22,7 @@ export const products = [
       "https://img.lovepik.com/free-png/20211229/lovepik-carrot-png-image_401011171_wh860.png",
     price: 1.8,
     category: "vegetables",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Kurczak",
@@ -31,7 +31,7 @@ export const products = [
       "https://res.cloudinary.com/dj484tw6k/image/upload/v1612868205/eefd5d17-b1ca-4d76-b756-542c5c7a7c0f.png",
     price: 9.5,
     category: "meat",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Mleko",
@@ -40,7 +40,7 @@ export const products = [
       "https://png.pngtree.com/png-vector/20190115/ourlarge/pngtree-milk-soy-milk-drink-coconut-juice-png-image_366928.jpg",
     price: 2.2,
     category: "dairy",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Czekolada",
@@ -49,7 +49,7 @@ export const products = [
       "https://www.sklepudziwisza.pl/wp-content/uploads/2022/02/Mleczna-BIO-naturalna.jpg",
     price: 4.5,
     category: "sweets",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Cola",
@@ -58,7 +58,7 @@ export const products = [
       "https://atlas-content-cdn.pixelsquid.com/stock-images/coke-soda-q13q2x2-600.jpg",
     price: 2.0,
     category: "drinks",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Pomarańcze",
@@ -67,7 +67,7 @@ export const products = [
       "https://e7.pngegg.com/pngimages/357/869/png-clipart-two-round-oranges-two-oranges-food-fruits.png",
     price: 3.5,
     category: "fruits",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Ziemniaki",
@@ -76,7 +76,7 @@ export const products = [
       "https://wyciskajzdrowie.pl/userdata/public/gfx/624/Ziemniak-mlody-Bio.jpg",
     price: 2.0,
     category: "vegetables",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Wołowina",
@@ -84,7 +84,7 @@ export const products = [
     image: "https://www.agrofood-poland.pl/images/wolowina/3.png",
     price: 12.0,
     category: "meat",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Jogurt naturalny",
@@ -93,7 +93,7 @@ export const products = [
       "https://polskikoszyk.pl/media/catalog/product/18429/brandbank-5900197010965-02-OhP3z5sVsUxSABVbMwUw7A==.jpg",
     price: 2.5,
     category: "dairy",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Ciastka owsiane",
@@ -102,7 +102,7 @@ export const products = [
       "https://png.pngtree.com/png-clipart/20240220/original/pngtree-oatmeal-cookies-biscuit-photo-png-image_14362946.png",
     price: 4.0,
     category: "sweets",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Herbata czarna",
@@ -111,7 +111,7 @@ export const products = [
       "https://img.lovepik.com/png/20231026/Black-tea-tea-red-hot-drink-teacup-fermentation_365543_wh860.png",
     price: 3.0,
     category: "drinks",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Baton energetyczny",
@@ -120,7 +120,7 @@ export const products = [
       "https://reh-sport.pl/wp-content/uploads/2021/10/energy_caramel_box.png",
     price: 5.5,
     category: "sweets",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Sok jabłkowy",
@@ -129,7 +129,7 @@ export const products = [
       "https://naszatlocznia.pl/wp-content/uploads/2022/01/Szklanka-Polslodkie1.png",
     price: 2.8,
     category: "drinks",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Ogórki",
@@ -138,7 +138,7 @@ export const products = [
       "https://e7.pngegg.com/pngimages/985/507/png-clipart-cucumber-cucumber.png",
     price: 3.5,
     category: "vegetables",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Szynka",
@@ -147,7 +147,7 @@ export const products = [
       "https://www.smakgorno.pl/uploads/image/produkty/szynki%20i%20mielonki/szynka_siatka.png",
     price: 8.0,
     category: "meat",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Ser gouda",
@@ -156,7 +156,7 @@ export const products = [
       "https://temar.pl/wp-content/uploads/2020/12/GOUDA-Frico-porcja_v02.png",
     price: 6.5,
     category: "dairy",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Koktajl truskawkowy",
@@ -165,7 +165,7 @@ export const products = [
       "https://png.pngtree.com/png-vector/20240123/ourlarge/pngtree-watercolor-strawberry-smoothie-png-image_11470138.png",
     price: 4.5,
     category: "drinks",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Makaron pełnoziarnisty",
@@ -174,7 +174,7 @@ export const products = [
       "https://esklep.pelcowizna.pl/userdata/public/gfx/17519/5900049011546.png",
     price: 3.2,
     category: "dairy",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Gruszki",
@@ -182,7 +182,7 @@ export const products = [
     image: "https://sklep.onlemon.pl/data/include/img/news/1643270137.png",
     price: 3.8,
     category: "fruits",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Sałatka grecka",
@@ -191,7 +191,7 @@ export const products = [
       "https://lh3.googleusercontent.com/proxy/DhBZhfCZgdjyoPUrXPYcKfhkiMSS3D6-JMpMzT-dj7FjVIRtHCbghSICVixc_WqZfhaDvsGI1IkgpphokK2UZ9sa0ocOY2LgvSntat76WzCeDQ3y1_nmtG_lhb8q-VR5mqHUhElgT4Q",
     price: 7.0,
     category: "vegetables",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Kabanosy",
@@ -200,7 +200,7 @@ export const products = [
       "https://zielinscy.pl/wp-content/uploads/Kabanosy_Zielinskiego_z_Kurczaka.png",
     price: 5.5,
     category: "meat",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Masło orzechowe",
@@ -209,7 +209,7 @@ export const products = [
       "https://sante.pl/wp-content/uploads/2016/10/peanut-butter-smooth-350g-sante.png",
     price: 6.0,
     category: "sweets",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
   {
     name: "Woda gazowana",
@@ -218,7 +218,7 @@ export const products = [
       "https://png.pngtree.com/png-clipart/20240208/original/pngtree-sparklingspring-and-mineral-water-aqua-photo-png-image_14258322.png",
     price: 1.5,
     category: "drinks",
-    shop: "Biedronka",
+    shop: "biedronka",
   },
   {
     name: "Ciasto marchewkowe",
@@ -227,7 +227,7 @@ export const products = [
       "https://png.pngtree.com/png-vector/20240207/ourlarge/pngtree-carrot-cake-cute-kid-style-oil-paint-png-image_11671735.png",
     price: 8.5,
     category: "sweets",
-    shop: "Lidl",
+    shop: "lidl",
   },
   {
     name: "Ryż basmati",
@@ -235,6 +235,6 @@ export const products = [
     image: "https://albo24.pl/wp-content/uploads/RYZ_basmat-rri.png",
     price: 4.0,
     category: "vegetables",
-    shop: "Kaufland",
+    shop: "kaufland",
   },
 ];
