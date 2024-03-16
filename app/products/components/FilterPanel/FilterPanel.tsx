@@ -4,6 +4,7 @@ import { filterOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
+import { set } from "react-hook-form";
 
 interface FilterPanelProps {
   changePriceSort: (value: PriceSort) => void;
@@ -30,32 +31,71 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const categoryFromParameter = searchParams.get("category");
   const shopFromParameter = searchParams.get("shop");
 
+  const checkAllCategories = () => {
+    const tmp: string[] = [];
+    filterOptions[1].options.forEach((option) => {
+      tmp.push(option.value);
+    });
+    console.log(tmp);
+    setCategories([...tmp]);
+  };
+
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement>,
     value: string | PriceSort
   ) => {
-    if ((e.target.type === "radio" && value === "asc") || value === "desc") {
+    const allCategories = filterOptions[1].options.map(
+      (option) => option.value
+    );
+    const allShops = [...shopsOptions, "allShops"];
+
+    if (value === "allCategories") {
+      setCategories(
+        categories.length === filterOptions[1].options.length
+          ? []
+          : allCategories
+      );
+    } else if (
+      shops.length === shopsOptions.length + 1 &&
+      value !== "allShops" &&
+      shopsOptions.includes(value)
+    ) {
+      setShops(shops.filter((shop) => shop !== "allShops" && shop !== value));
+    } else if (
+      categories.length === filterOptions[1].options.length &&
+      value !== "allCategories" &&
+      filterOptions[1].options.map((option) => option.value).includes(value)
+    ) {
+      setCategories(
+        categories.filter(
+          (category) => category !== "allCategories" && category !== value
+        )
+      );
+    } else if (value === "allShops") {
+      setShops(shops.length === shopsOptions.length + 1 ? [] : allShops);
+    } else if (value === "asc" || value === "desc") {
       changePriceSort(value);
-      return;
     } else if (shopsOptions.includes(value)) {
-      if (shops.includes(value)) {
-        setShops(shops.filter((shop) => shop !== value));
-      } else {
-        setShops([...shops, value]);
-      }
+      setShops(toggleArrayItem(shops, value));
     } else {
-      if (categories.includes(value)) {
-        setCategories(categories.filter((category) => category !== value));
-      } else {
-        setCategories([...categories, value]);
-      }
+      setCategories(toggleArrayItem(categories, value));
     }
   };
 
+  const toggleArrayItem = (array: (string | null)[], item: string | null) => {
+    return array.includes(item)
+      ? array.filter((i) => i !== item)
+      : [...array, item];
+  };
+
   useEffect(() => {
-    console.log(categories);
-    console.log(priceSort);
-  }, [categories, priceSort]);
+    if (categoryFromParameter) {
+      setCategories([categoryFromParameter]);
+    }
+    if (shopFromParameter) {
+      setShops([shopFromParameter]);
+    }
+  }, [categoryFromParameter, shopFromParameter]);
 
   return (
     <div className="w-1/6">
@@ -69,17 +109,15 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 checked={
                   filterOption.type === "checkbox"
                     ? categories.includes(option.value) ||
-                      shops.includes(option.value) ||
-                      categoryFromParameter === option.value ||
-                      shopFromParameter === option.value
+                      shops.includes(option.value)
                     : priceSort === option.value
                 }
                 onChange={(e) => handleFilter(e, option.value)}
                 type={filterOption.type}
                 value={option.value}
-                id={option.label}
+                id={option.value}
               />
-              <label htmlFor={option.label}>{option.label}</label>
+              <label htmlFor={option.value}>{option.label}</label>
             </div>
           ))}
         </div>
