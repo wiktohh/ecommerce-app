@@ -7,11 +7,10 @@ import LoadingSpinner from "../LoadingSpinner";
 
 const PopularProducts = () => {
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPopularProducts = async () => {
-      setIsLoading(true);
       const response = await axios.get("/api/products/popular");
       const data = await response.data;
       setProducts(data);

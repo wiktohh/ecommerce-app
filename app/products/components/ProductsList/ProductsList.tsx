@@ -7,7 +7,7 @@ import Button from "@/app/components/Button";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
   const [itemsPerPage] = useState(10);
@@ -16,7 +16,6 @@ const ProductsList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setIsLoading(true);
       const response = await axios.get(
         `/api/products?page=${currentPage}&limit=${itemsPerPage}`
       );
