@@ -29,7 +29,7 @@ const ProductsList = () => {
             <LoadingSpinner />
           </div>
         ) : (
-          <div className="flex flex-wrap gap-16">
+          <div className="flex justify-center flex-wrap gap-16">
             {products.map((product, idx) => (
               <Product key={idx} product={product} />
             ))}
