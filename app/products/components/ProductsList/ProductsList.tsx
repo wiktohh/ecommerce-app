@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import Product from "./Product";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 import Button from "@/app/components/Button";
+import Select from "@/app/components/Select";
+import { itemsPerPageOptions } from "./constants";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
@@ -25,7 +27,7 @@ const ProductsList = () => {
       setIsLoading(false);
     };
     fetchProducts();
-  }, [currentPage]);
+  }, [currentPage, itemsPerPage]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -39,9 +41,23 @@ const ProductsList = () => {
     }
   };
 
+  const handleSelectChange = (value: string) => {
+    setCurrentPage(1);
+    setItemsPerPage(Number(value));
+  };
+
   return (
     <div className="w-5/6">
-      <h2 className="text-xl mt-4 mb-2">Lista produktów: </h2>
+      <div className="flex justify-between mt-4 mb-2">
+        <h2 className="text-xl">Lista produktów: </h2>
+
+        <Select
+          label="Wybierz ilość produktów"
+          onChange={handleSelectChange}
+          selectedValue="10"
+          options={itemsPerPageOptions}
+        />
+      </div>
       <div>
         {isLoading ? (
           <div className="flex justify-center items-center">

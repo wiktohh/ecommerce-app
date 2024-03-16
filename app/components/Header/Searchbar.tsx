@@ -25,10 +25,10 @@ const Searchbar = () => {
   return (
     <div className="h-8 bg-white rounded-full px-4 py-2 flex items-center gap-8 text-3xl">
       <Select
-        label={"XD"}
         onChange={handleSelectChange}
         selectedValue={category}
         options={categories}
+        roundedFull={true}
       />
       <input
         onChange={handleInputChange}
