@@ -22,7 +22,7 @@ const ProductsList = () => {
 
   return (
     <div className="w-5/6">
-      <h2>Lista produktów: </h2>
+      <h2 className="text-xl mt-4 mb-2">Lista produktów: </h2>
       <div>
         {isLoading ? (
           <div className="flex justify-center items-center">
