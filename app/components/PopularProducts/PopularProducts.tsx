@@ -1,43 +1,24 @@
 "use client";
+import { useEffect, useState } from "react";
 import Wrapper from "../Wrapper";
-// @ts-ignore
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-const temporaryProducts = [
-  {
-    id: 1,
-    name: "Koszulka",
-    price: 99,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    name: "Spodnie",
-    price: 199,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    name: "Buty",
-    price: 299,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    name: "Spodnica",
-  },
-];
+import ProductsSlider from "./ProductsSlider";
+import axios from "axios";
 
 const PopularProducts = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-  };
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPopularProducts = async () => {
+      setIsLoading(true);
+      const response = await axios.get("/api/products/popular");
+      const data = await response.data;
+      setProducts(data);
+      setIsLoading(false);
+    };
+
+    fetchPopularProducts();
+  }, []);
 
   return (
     <Wrapper>
@@ -45,15 +26,11 @@ const PopularProducts = () => {
         <h3>Najpopularniejsze produkty</h3>
         <p className="text-gray-400">wybierane przez klientow</p>
       </div>
-      <Slider {...settings}>
-        {temporaryProducts.map((product) => (
-          <div key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-          </div>
-        ))}
-      </Slider>
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : (
+        <ProductsSlider products={products} />
+      )}
     </Wrapper>
   );
 };

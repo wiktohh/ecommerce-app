@@ -1,30 +1,30 @@
 export const navLinks = [
   {
     name: "Napoje",
-    path: "/categories/drinks",
+    path: "/products?categories=drinks",
   },
   {
     name: "Owoce",
-    path: "/categories/fruits",
+    path: "/products?categories=fruits",
   },
   {
     name: "Warzywa",
-    path: "/categories/vegetables",
+    path: "/products?categories=vegetables",
   },
   {
     name: "Mięso",
-    path: "/categories/meat",
+    path: "/products?categories=meat",
   },
   {
     name: "Nabiał",
-    path: "/categories/dairy",
+    path: "/products?categories=dairy",
   },
   {
     name: "Słodycze",
-    path: "/categories/sweets",
+    path: "/products?categories=sweets",
   },
   {
     name: "Pieczywo",
-    path: "/categories/bread",
+    path: "/products?categories=bread",
   },
 ];
