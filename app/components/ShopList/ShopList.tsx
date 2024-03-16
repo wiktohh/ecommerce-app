@@ -30,7 +30,10 @@ const ShopList = () => {
       <div className="pt-8 flex justify-around">
         {tmpShops.map((shop) => (
           <div key={shop.id} className="relative">
-            <Link href={`/categories/${shop.name}`} className="cursor-pointer">
+            <Link
+              href={`/products?category=${shop.name}`}
+              className="cursor-pointer"
+            >
               <Image
                 width={350}
                 className="rounded-2xl"
