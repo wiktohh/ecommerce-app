@@ -10,11 +10,14 @@ export type PriceSort = "asc" | "desc";
 const ProductsPage = () => {
   const [priceSort, setPriceSort] = useState<PriceSort>("asc");
 
-  const [categories, setCategories] = useState([]);
-  const [shops, setShops] = useState<string[]>([]);
   const searchParams = useSearchParams();
+  const [categories, setCategories] = useState([searchParams.get("category")]);
+  const [shops, setShops] = useState([searchParams.get("shop")]);
+  const [currentPage, setCurrentPage] = useState(1);
   const categoryFromParameter = searchParams.get("category");
   const shopFromParameter = searchParams.get("shop");
+
+  console.log(categoryFromParameter, shopFromParameter);
 
   useEffect(() => {
     if (categoryFromParameter) {
@@ -34,23 +37,11 @@ const ProductsPage = () => {
     setShops(shops);
   };
 
+  const setFirstCurrentPage = () => {
+    setCurrentPage(1);
+  };
+
   console.log(categories);
-
-  // const changeFilter = (value: string) => {
-  //   if (!categories.includes(value)) {
-  //     setCategories([...categories, value]);
-  //   } else {
-  //     setCategories(categories.filter((f) => f !== value));
-  //   }
-  // };
-
-  // const changeShop = (value: string) => {
-  //   if (!shops.includes(value)) {
-  //     setShops([...shops, value]);
-  //   } else {
-  //     setShops(shops.filter((f) => f !== value));
-  //   }
-  // };
 
   console.log(categories, shops);
 
@@ -63,11 +54,14 @@ const ProductsPage = () => {
           categories={categories}
           shops={shops}
           onFilterChange={applyFilter}
+          setFirstCurrentPage={setFirstCurrentPage}
         />
         <ProductsList
           priceSort={priceSort}
           categories={categories}
           shops={shops}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </Wrapper>

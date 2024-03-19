@@ -8,14 +8,10 @@ import { useDispatch } from "react-redux";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import { useEffect } from "react";
+import { ProductWithQuantity } from "@/app/types/types";
 
 interface CartItemProps {
-  item: {
-    name: string;
-    image: string;
-    price: number;
-    quantity: number;
-  };
+  item: ProductWithQuantity;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {

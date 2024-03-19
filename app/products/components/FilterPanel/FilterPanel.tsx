@@ -15,12 +15,14 @@ interface FilterPanelProps {
     categories: (string | null)[],
     shops: (string | null)[]
   ) => void;
+  setFirstCurrentPage: () => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   changePriceSort,
   priceSort,
   onFilterChange,
+  setFirstCurrentPage,
 }) => {
   const shopsOptions = ["biedronka", "lidl", "kaufland"];
 
@@ -40,6 +42,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       (option) => option.value
     );
     const allShops = [...shopsOptions, "allShops"];
+    setFirstCurrentPage();
 
     if (value === "allCategories") {
       setCategories(

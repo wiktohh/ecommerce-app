@@ -6,8 +6,8 @@ type SortOrder = "asc" | "desc";
 
 export async function GET(req: NextRequest) {
   try {
-    const page = req.nextUrl.searchParams.get("page") || 1;
-    const limit = req.nextUrl.searchParams.get("limit") || 10;
+    const page = req.nextUrl.searchParams.get("page") || 2;
+    const limit = req.nextUrl.searchParams.get("limit") || 5;
     const sort: SortOrder =
       (req.nextUrl.searchParams.get("sort") as SortOrder) || "asc";
 
@@ -36,6 +36,8 @@ export async function GET(req: NextRequest) {
       };
     }
 
+    console.clear();
+
     const productsLength = await prisma.product.count({
       where: whereCondition,
     });
@@ -48,6 +50,10 @@ export async function GET(req: NextRequest) {
       },
       where: whereCondition,
     });
+
+    console.log(products);
+    console.log(whereCondition);
+    console.log(page, limit, shop, category);
 
     return NextResponse.json({ products, productsLength });
   } catch (e) {

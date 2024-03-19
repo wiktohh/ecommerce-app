@@ -6,39 +6,42 @@ import LoadingSpinner from "@/app/components/LoadingSpinner";
 import Button from "@/app/components/Button";
 import Select from "@/app/components/Select";
 import { itemsPerPageOptions } from "./constants";
+import { useSearchParams } from "next/navigation";
 
 interface ProductListProps {
   priceSort: "asc" | "desc";
   categories: (string | null)[];
   shops: (string | null)[];
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 const ProductsList: React.FC<ProductListProps> = ({
   priceSort,
   categories,
   shops,
+  currentPage,
+  setCurrentPage,
 }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const searchParams = useSearchParams();
 
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("shops", shops.join("-"));
-      console.log("categories", categories.join("-"));
-      const response = await axios.get(
-        `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
-          "-"
-        )}&category=${categories.join("-")}`
-      );
+      const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
+        "-"
+      )}&category=${categories.join("-")}`;
+      console.log(url);
+      const response = await axios.get(url);
       const data = await response.data;
-      setProducts(data.products);
-      setTotalProducts(data.productsLength);
       setIsLoading(false);
+      setTotalProducts(data.productsLength);
+      setProducts(data.products);
     };
     fetchProducts();
   }, [currentPage, itemsPerPage, priceSort, categories, shops]);
