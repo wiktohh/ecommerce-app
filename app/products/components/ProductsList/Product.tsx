@@ -20,6 +20,16 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   const dispatch = useDispatch();
 
+  const handleAddToCartButtonClick = (product) => {
+    dispatch(
+      addToCart({
+        name: product.name,
+        image: product.image,
+        price: product.price,
+      })
+    );
+  };
+
   return (
     <div
       className=" relative w-40 flex flex-col justify-between items-center p-4 border-2 border-gray-200 rounded-md"
@@ -28,17 +38,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     >
       {isButtonVisible && (
         <div className="absolute top-2 right-2">
-          <Button
-            onClick={() =>
-              dispatch(
-                addToCart({
-                  name: product.name,
-                  image: product.image,
-                  price: product.price,
-                })
-              )
-            }
-          >
+          <Button onClick={() => handleAddToCartButtonClick(product)}>
             <FaCartPlus className="text-2xl" />
           </Button>
         </div>

@@ -1,18 +1,29 @@
 "use client";
 import Button from "@/app/components/Button";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SummaryCart = () => {
   const cart = useSelector((state) => state.cart.value);
+  const session = useSession();
+
+  const checkIfUserIsLogged = () => {
+    if (session.status === "authenticated") {
+      return true;
+    }
+    return false;
+  };
 
   const [discountCode, setDiscountCode] = useState("");
   const [deliveryPrice, setDeliveryPrice] = useState(10);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const inputRef = useRef(null);
-  const buttonRef = useRef(null);
+
+  const router = useRouter();
 
   const getTotalPrice = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -32,8 +43,16 @@ const SummaryCart = () => {
     });
   };
 
+  const handlePaymentButtonClick = () => {
+    if (checkIfUserIsLogged()) {
+      // Redirect to payment page
+    } else {
+      router.push("/auth");
+    }
+  };
+
   return (
-    <div className="w-1/3 bg-orange-100 rounded-xl p-4">
+    <div className="w-1/3 h-max bg-orange-100 rounded-xl p-4">
       <h3 className="text-2xl pb-4">Podsumowanie</h3>
       <div className="flex justify-between">
         <p>Suma</p>
@@ -47,7 +66,7 @@ const SummaryCart = () => {
         <p>Do zapłaty</p>
         <p>{getTotalPrice() + deliveryPrice} zł</p>
       </div>
-      <Button onClick={checkIfDiscountCodeIsValid} fullWidth={true}>
+      <Button onClick={handlePaymentButtonClick} fullWidth={true}>
         Zapłać
       </Button>
 

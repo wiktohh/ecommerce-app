@@ -7,6 +7,7 @@ import { FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
+import { useEffect } from "react";
 
 interface CartItemProps {
   item: {
@@ -19,6 +20,11 @@ interface CartItemProps {
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const dispatch = useDispatch();
+
+  const removeFromCartHandler = (name: string) => {
+    dispatch(removeFromCart(name));
+  };
+
   return (
     <div className="bg-orange-100 rounded-2xl flex justify-between items-center h-40 p-4 mb-4">
       <img
@@ -38,7 +44,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       </div>
       <div className="h-full w-1/7 flex flex-col justify-between items-end">
         <span>Cena: {item.price}zł</span>
-        <button onClick={() => dispatch(removeFromCart(item.name))}>
+        <button onClick={() => removeFromCartHandler(item.name)}>
           <FaTrash className="text-2xl" />
         </button>
       </div>
