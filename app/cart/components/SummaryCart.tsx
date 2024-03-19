@@ -1,5 +1,7 @@
 "use client";
 import Button from "@/app/components/Button";
+import { RootState } from "@/app/store/store";
+import { ProductWithQuantity } from "@/app/types/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -7,7 +9,7 @@ import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SummaryCart = () => {
-  const cart = useSelector((state) => state.cart.value);
+  const cart = useSelector((state: RootState) => state.cart.value);
   const session = useSession();
 
   const checkIfUserIsLogged = () => {
@@ -26,7 +28,11 @@ const SummaryCart = () => {
   const router = useRouter();
 
   const getTotalPrice = () => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return cart.reduce(
+      (acc: number, item: ProductWithQuantity) =>
+        acc + item.price * item.quantity,
+      0
+    );
   };
 
   const checkIfDiscountCodeIsValid = () => {

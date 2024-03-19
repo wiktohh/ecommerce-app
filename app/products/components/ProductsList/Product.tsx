@@ -5,14 +5,10 @@ import { FaCartPlus } from "react-icons/fa";
 import Button from "@/app/components/Button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
+import { Product } from "@/app/types/types";
 
 interface ProductProps {
-  product: {
-    name: string;
-    description: string;
-    price: number;
-    image: string;
-  };
+  product: Product;
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
@@ -20,7 +16,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   const dispatch = useDispatch();
 
-  const handleAddToCartButtonClick = (product) => {
+  const handleAddToCartButtonClick = (product: Product) => {
     dispatch(
       addToCart({
         name: product.name,

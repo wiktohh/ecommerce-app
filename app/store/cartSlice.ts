@@ -1,15 +1,18 @@
 "use client";
 import { createSlice } from "@reduxjs/toolkit";
+import { ProductWithQuantity } from "../types/types";
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    value: JSON.parse(localStorage.getItem("cart")) || [],
+    value: JSON.parse(localStorage.getItem("cart") as string) || [],
   },
   reducers: {
     addToCart: (state, action) => {
       const { name } = action.payload;
-      const product = state.value.find((item) => item.name === name);
+      const product = state.value.find(
+        (item: ProductWithQuantity) => item.name === name
+      );
       if (product) {
         product.quantity += 1;
       } else {
@@ -18,18 +21,24 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
     removeFromCart: (state, action) => {
-      state.value = state.value.filter((item) => item.name !== action.payload);
+      state.value = state.value.filter(
+        (item: ProductWithQuantity) => item.name !== action.payload
+      );
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
     increaseQuantity: (state, action) => {
-      const product = state.value.find((item) => item.name === action.payload);
+      const product = state.value.find(
+        (item: ProductWithQuantity) => item.name === action.payload
+      );
       if (product) {
         product.quantity += 1;
       }
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
     decreaseQuantity: (state, action) => {
-      const product = state.value.find((item) => item.name === action.payload);
+      const product = state.value.find(
+        (item: ProductWithQuantity) => item.name === action.payload
+      );
       if (product && product.quantity > 1) {
         product.quantity -= 1;
       }
