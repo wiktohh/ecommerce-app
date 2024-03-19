@@ -32,7 +32,10 @@ const ProductsPage = () => {
     setPriceSort(value);
   };
 
-  const applyFilter = (categories: string[], shops: string[]) => {
+  const applyFilter = (
+    categories: (string | null)[],
+    shops: (string | null)[]
+  ) => {
     setCategories(categories);
     setShops(shops);
   };
