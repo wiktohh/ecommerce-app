@@ -26,3 +26,10 @@ model User {
   email String @unique
   hashedPassword String
 }
+
+model Discount {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  code String @unique
+  discount Float?
+  deliveryForFree Boolean?
+}

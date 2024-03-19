@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/app/components/Button";
+import axios from "axios";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -18,13 +19,17 @@ const SummaryCart = () => {
   };
 
   const checkIfDiscountCodeIsValid = () => {
-    if (discountCode.toLowerCase() === "FREEDELIVERY24".toLowerCase()) {
-      setDeliveryPrice(0);
-      if (inputRef.current) {
-        (inputRef.current as HTMLInputElement).disabled = true;
+    axios.post("/api/discount", { discountCode }).then((res) => {
+      if (res.data.isValid) {
+        setDeliveryPrice(0);
+        if (inputRef.current) {
+          (inputRef.current as HTMLInputElement).disabled = true;
+        }
+        setIsButtonDisabled(true);
+      } else {
+        alert("Kod rabatowy jest nieprawidłowy");
       }
-      setIsButtonDisabled(true);
-    }
+    });
   };
 
   return (
