@@ -31,15 +31,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const categoryFromParameter = searchParams.get("category");
   const shopFromParameter = searchParams.get("shop");
 
-  const checkAllCategories = () => {
-    const tmp: string[] = [];
-    filterOptions[1].options.forEach((option) => {
-      tmp.push(option.value);
-    });
-    console.log(tmp);
-    setCategories([...tmp]);
-  };
-
+  // to refactor some day XD
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement>,
     value: string | PriceSort

@@ -7,11 +7,24 @@ import NavLinks from "./NavLinks";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Button from "../Button";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const cart = useSelector((state) => state.cart.value);
   const session = useSession();
+  const router = useRouter();
+
+  const handleCartClick = () => {
+    router.push("/cart");
+  };
+
+  const getCartQuantity = () => {
+    return cart.reduce((acc, item) => acc + item.quantity, 0);
+  };
+
   return (
-    <header className="w-full h-full bg-orange-100">
+    <header className="w-full bg-orange-100">
       <Wrapper>
         <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between items-center">
@@ -20,9 +33,12 @@ const Header = () => {
             </Link>
             <Searchbar />
             <div className="flex gap-8">
-              <div className="flex items-center gap-1">
+              <div
+                onClick={handleCartClick}
+                className="flex items-center gap-1"
+              >
                 <FiShoppingCart className="text-2xl" />
-                <p>Koszyk</p>
+                <p>Koszyk ({getCartQuantity()})</p>
               </div>
               {session.status === "authenticated" ? (
                 <Button onClick={() => signOut()}>Wyloguj się</Button>

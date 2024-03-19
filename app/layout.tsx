@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AuthContext from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import StoreProvider from "./providers/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <Toaster />
         <AuthContext>
-          <Header />
-          {children}
-          <Footer />
+          <StoreProvider>
+            <Header />
+            {children}
+            <Footer />
+          </StoreProvider>
         </AuthContext>
       </body>
     </html>

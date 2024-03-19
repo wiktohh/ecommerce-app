@@ -1,16 +1,16 @@
 export const filterOptions = [
   {
     type: "radio",
-    label: "Price",
+    label: "Cena",
     value: "price",
     options: [
-      { label: "Low to High", value: "asc" },
-      { label: "High to Low", value: "desc" },
+      { label: "Od najniższej", value: "asc" },
+      { label: "Od najwyższej", value: "desc" },
     ],
   },
   {
     type: "checkbox",
-    label: "Category",
+    label: "Kategorie",
     value: "category",
     options: [
       { label: "Wszystkie", value: "allCategories" },
@@ -25,7 +25,7 @@ export const filterOptions = [
   },
   {
     type: "checkbox",
-    label: "Shop",
+    label: "Sklepy",
     value: "shop",
     options: [
       { label: "Wszystkie", value: "allShops" },
