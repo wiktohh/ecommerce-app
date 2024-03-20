@@ -2,15 +2,26 @@
 import Button from "@/app/components/Button";
 import { RootState } from "@/app/store/store";
 import { ProductWithQuantity } from "@/app/types/types";
-import axios from "axios";
+import { useAxios } from "@/app/api/hooks/use-axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 
 const SummaryCart = () => {
   const cart = useSelector((state: RootState) => state.cart.value);
+  const [publishStripeKey, setPublishStripeKey] = useState("");
   const session = useSession();
+
+  useEffect(() => {
+    const fetchStripeKey = async () => {
+      const response = await axios.get("/api/config");
+      setPublishStripeKey(response.data);
+    };
+    fetchStripeKey();
+  }, []);
 
   const checkIfUserIsLogged = () => {
     if (session.status === "authenticated") {
@@ -49,9 +60,23 @@ const SummaryCart = () => {
     });
   };
 
-  const handlePaymentButtonClick = () => {
+  const handlePaymentButtonClick = async () => {
     if (checkIfUserIsLogged()) {
-      // Redirect to payment page
+      const stripe = await loadStripe(publishStripeKey);
+
+      const response = await axios.post(
+        "/api/payments",
+        { cart, deliveryPrice },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const session = await response.data;
+      const result = stripe?.redirectToCheckout({
+        sessionId: session.id,
+      });
     } else {
       router.push("/auth");
     }
