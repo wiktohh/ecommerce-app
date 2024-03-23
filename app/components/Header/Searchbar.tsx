@@ -85,7 +85,7 @@ const Searchbar = () => {
           onChange={handleInputChange}
           value={query}
           type="text"
-          placeholder="Search a product"
+          placeholder="Wyszukaj produkt..."
           className="text-black w-full text-base outline-none border-none"
         />
         <button>
