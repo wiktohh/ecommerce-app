@@ -48,7 +48,16 @@ const Header = () => {
                 </p>
               </button>
               {session.status === "authenticated" ? (
-                <Button onClick={() => signOut()}>Wyloguj się</Button>
+                <div className="flex gap-8">
+                  <Link
+                    href={"/account"}
+                    className="flex items-center gap-1 hover:text-orange-500"
+                  >
+                    <MdOutlineAccountCircle className="text-3xl" />
+                    <p>Konto</p>
+                  </Link>
+                  <Button onClick={() => signOut()}>Wyloguj się</Button>
+                </div>
               ) : (
                 <Link
                   href={"/auth"}
