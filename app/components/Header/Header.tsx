@@ -38,15 +38,15 @@ const Header = () => {
             </Link>
             <Searchbar />
             <div className="flex gap-8">
-              <div
+              <button
                 onClick={handleCartClick}
-                className="flex items-center gap-1"
+                className="flex items-center gap-1 hover:text-orange-500 cursor-pointer"
               >
                 <FiShoppingCart className="text-2xl" />
                 <p>
                   Koszyk {getCartQuantity() > 0 && `(${getCartQuantity()})`}
                 </p>
-              </div>
+              </button>
               {session.status === "authenticated" ? (
                 <Button onClick={() => signOut()}>Wyloguj się</Button>
               ) : (
@@ -55,7 +55,7 @@ const Header = () => {
                   className="flex items-center gap-1 hover:text-orange-500"
                 >
                   <MdOutlineAccountCircle className="text-3xl" />
-                  <p>Konto</p>
+                  <p>Zaloguj się</p>
                 </Link>
               )}
             </div>
