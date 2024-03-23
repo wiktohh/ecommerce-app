@@ -41,11 +41,13 @@ const SummaryCart = () => {
   const router = useRouter();
 
   const getTotalPrice = () => {
-    return cart.reduce(
-      (acc: number, item: ProductWithQuantity) =>
-        acc + item.price * item.quantity,
-      0
-    );
+    return cart
+      .reduce(
+        (acc: number, item: ProductWithQuantity) =>
+          acc + item.price * item.quantity,
+        0
+      )
+      .toFixed(2);
   };
 
   const checkIfDiscountCodeIsValid = () => {
@@ -100,7 +102,7 @@ const SummaryCart = () => {
       </div>
       <div className="flex justify-between py-2">
         <p>Do zapłaty</p>
-        <p>{getTotalPrice() + deliveryPrice} zł</p>
+        <p>{(Number(getTotalPrice()) + deliveryPrice).toFixed(2)} zł</p>
       </div>
       <Button onClick={handlePaymentButtonClick} fullWidth={true}>
         Zapłać
