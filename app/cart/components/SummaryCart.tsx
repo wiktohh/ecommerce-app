@@ -7,13 +7,15 @@ import axios, { AxiosRequestConfig } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { resetCart } from "@/app/store/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 
 const SummaryCart = () => {
   const cart = useSelector((state: RootState) => state.cart.value);
   const [publishStripeKey, setPublishStripeKey] = useState("");
   const session = useSession();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchStripeKey = async () => {
@@ -77,6 +79,9 @@ const SummaryCart = () => {
       const result = stripe?.redirectToCheckout({
         sessionId: session.id,
       });
+      if (result) {
+        dispatch(resetCart());
+      }
     } else {
       router.push("/auth");
     }
