@@ -1,4 +1,4 @@
-import { ProductWithQuantity } from "@/app/types/types";
+import { OrderProduct, ProductWithQuantity } from "@/app/types/types";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
         status: "paid",
         orderProducts: {
           createMany: {
-            data: cart.map((item) => ({
+            data: cart.map((item: OrderProduct) => ({
               productId: item.name,
               quantity: item.quantity,
               price: item.price,
@@ -86,7 +86,6 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ id: checkoutSession.id }, { status: 200 });
   } catch (e) {
-    console.log(e.message);
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });
   }
 }

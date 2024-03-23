@@ -8,3 +8,11 @@ export interface Product {
 export interface ProductWithQuantity extends Product {
   quantity: number;
 }
+
+export interface OrderProduct {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
