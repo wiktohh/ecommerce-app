@@ -28,7 +28,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   return (
     <div
-      className=" relative w-40 flex flex-col justify-between items-center p-4 border-2 border-gray-200 rounded-md"
+      className=" relative w-40 h-56 flex flex-col justify-between items-center p-4 border-2 border-gray-200 rounded-md"
       onMouseLeave={() => setIsButtonVisible(false)}
       onMouseEnter={() => setIsButtonVisible(true)}
     >
@@ -39,7 +39,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           </Button>
         </div>
       )}
-      <img src={product.image} alt="product image" className="w-40" />
+      <img src={product.image} alt="product image" className="w-24" />
       <div>
         <h3>{product.name}</h3>
         <p>{product.price}</p>

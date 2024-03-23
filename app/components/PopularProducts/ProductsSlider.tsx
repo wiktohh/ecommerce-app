@@ -1,6 +1,8 @@
+// @ts-ignore
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Product from "@/app/products/components/ProductsList/Product";
 
 interface ProductsSliderProps {
   products: {
@@ -16,21 +18,19 @@ interface ProductsSliderProps {
 
 const ProductsSlider: React.FC<ProductsSliderProps> = ({ products }) => {
   const settings = {
+    accessibility: true,
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+    arrows: true,
   };
 
   return (
     <Slider {...settings}>
       {products.map((product) => (
-        <div key={product.id}>
-          <img src={product.image} alt={product.name} />
-          <p>{product.name}</p>
-          <p>{product.price}</p>
-        </div>
+        <Product key={product.id} product={product} />
       ))}
     </Slider>
   );
