@@ -15,6 +15,7 @@ const SummaryCart = () => {
   const cart = useSelector((state: RootState) => state.cart.value);
   const [publishStripeKey, setPublishStripeKey] = useState("");
   const session = useSession();
+  const email = session.data?.user?.email;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -70,7 +71,7 @@ const SummaryCart = () => {
 
       const response = await axios.post(
         "/api/payments",
-        { cart, deliveryPrice },
+        { cart, deliveryPrice, email },
         {
           headers: {
             "Content-Type": "application/json",

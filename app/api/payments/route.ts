@@ -3,12 +3,17 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-    const { cart, deliveryPrice } = await req.json();
+    const { email, cart, deliveryPrice } = await req.json();
+
+    console.log(cart);
 
     const lineItems = cart.map((item: ProductWithQuantity) => ({
       price_data: {
@@ -43,8 +48,45 @@ export async function POST(req: Request) {
       cancel_url: `${process.env.HOST_NAME}/cancel`,
     });
 
+    console.clear();
+
+    console.log(email);
+    console.log(cart);
+
+    const newOrder = await prisma.order.create({
+      data: {
+        userId: email as string,
+        total:
+          cart.reduce(
+            (acc: number, item: ProductWithQuantity) =>
+              acc + item.price * item.quantity,
+            0
+          ) + deliveryPrice,
+        delivery: deliveryPrice,
+        status: "paid",
+        orderProducts: {
+          createMany: {
+            data: cart.map((item) => ({
+              productId: item.name,
+              quantity: item.quantity,
+              price: item.price,
+              image: item.image,
+            })),
+          },
+        },
+      },
+      include: {
+        orderProducts: true,
+      },
+    });
+    console.log(newOrder);
+
+    if (!newOrder) {
+      throw new Error("Nie udało się utworzyć zamówienia");
+    }
     return NextResponse.json({ id: checkoutSession.id }, { status: 200 });
   } catch (e) {
+    console.log(e.message);
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });
   }
 }
