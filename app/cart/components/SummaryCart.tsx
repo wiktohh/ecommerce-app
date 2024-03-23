@@ -2,7 +2,7 @@
 import Button from "@/app/components/Button";
 import { RootState } from "@/app/store/store";
 import { ProductWithQuantity } from "@/app/types/types";
-import { useAxios } from "@/app/api/hooks/use-axios";
+import { useAxios } from "@/app/hooks/use-axios";
 import axios, { AxiosRequestConfig } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
