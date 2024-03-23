@@ -9,9 +9,11 @@ import { signOut, useSession } from "next-auth/react";
 import Button from "../Button";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/app/store/store";
+import { ProductWithQuantity } from "@/app/types/types";
 
 const Header = () => {
-  const cart = useSelector((state) => state.cart.value);
+  const cart = useSelector((state: RootState) => state.cart.value);
   const session = useSession();
   const router = useRouter();
 
@@ -20,7 +22,10 @@ const Header = () => {
   };
 
   const getCartQuantity = () => {
-    return cart.reduce((acc, item) => acc + item.quantity, 0);
+    return cart.reduce(
+      (acc: number, item: ProductWithQuantity) => acc + item.quantity,
+      0
+    );
   };
 
   return (
@@ -38,7 +43,9 @@ const Header = () => {
                 className="flex items-center gap-1"
               >
                 <FiShoppingCart className="text-2xl" />
-                <p>Koszyk ({getCartQuantity()})</p>
+                <p>
+                  Koszyk {getCartQuantity() > 0 && `(${getCartQuantity()})`}
+                </p>
               </div>
               {session.status === "authenticated" ? (
                 <Button onClick={() => signOut()}>Wyloguj się</Button>
