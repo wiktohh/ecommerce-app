@@ -15,6 +15,7 @@ const AuthForm = () => {
   const session = useSession();
   const [variant, setVariant] = useState<Variant>("login");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -42,7 +43,7 @@ const AuthForm = () => {
       signIn("credentials", { ...data, redirect: false })
         .then((cb) => {
           if (cb?.error) {
-            toast.error(cb.error);
+            setError(cb.error);
           } else if (cb?.ok) {
             router.back();
           }
@@ -56,14 +57,13 @@ const AuthForm = () => {
         .then(() => signIn("credentials", { ...data, redirect: false }))
         .then((cb) => {
           if (cb?.error) {
-            toast.error(`An error occurred`);
+            setError(cb.error);
           } else if (cb?.ok) {
             router.back();
           }
         })
         .catch((err) => {
-          console.log(err);
-          toast.error(err.response.data || "Something went wrong");
+          setError(err.response.data);
         })
         .finally(() => {
           setIsLoading(false);
@@ -110,6 +110,11 @@ const AuthForm = () => {
           type="password"
           disabled={isLoading}
         />
+        {error && (
+          <div className="bg-red-200 border-1 rounded-md text-center border-red-700 p-2 text-red-700 max-w-full mb-4 ">
+            {error}
+          </div>
+        )}
         <Button type="submit" fullWidth={true} disabled={isLoading}>
           {variant === "login" ? "Zaloguj się" : "Zarejestruj się"}
         </Button>

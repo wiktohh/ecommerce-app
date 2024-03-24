@@ -6,8 +6,13 @@ export async function PATCH(req: Request) {
     const { email, currentPassword, repeatCurrentPassword, newPassword } =
       await req.json();
 
+    console.log(email, currentPassword, repeatCurrentPassword, newPassword);
+
     if (currentPassword !== repeatCurrentPassword) {
-      return new NextResponse("Passwords do not match", { status: 400 });
+      return NextResponse.json(
+        { error: "Hasła nie pasują do siebie" },
+        { status: 400 }
+      );
     }
 
     const user = await prisma?.user.findUnique({
@@ -17,13 +22,22 @@ export async function PATCH(req: Request) {
     });
 
     if (!user) {
-      return new NextResponse("User not found", { status: 404 });
+      return NextResponse.json(
+        { error: "Nie znaleziono użytkownika" },
+        { status: 404 }
+      );
     }
 
-    const hashedPassword = await bcrypt.hash(currentPassword, 12);
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.hashedPassword
+    );
 
-    if (!bcrypt.compare(hashedPassword, user.hashedPassword)) {
-      return new NextResponse("Invalid password", { status: 400 });
+    if (!isPasswordCorrect) {
+      return NextResponse.json(
+        { error: "Nieprawidłowe hasło" },
+        { status: 400 }
+      );
     }
 
     const newHashedPassword = await bcrypt.hash(newPassword, 12);
@@ -37,8 +51,12 @@ export async function PATCH(req: Request) {
       },
     });
 
-    return new NextResponse("Password changed", { status: 200 });
-  } catch (e) {
-    return new NextResponse((e as Error).message, { status: 500 });
+    return NextResponse.json("Hasło zostało zmienione", { status: 200 });
+  } catch (error) {
+    console.error("Wystąpił błąd:", error);
+    return NextResponse.json(
+      { error: "Wystąpił błąd serwera" },
+      { status: 500 }
+    );
   }
 }

@@ -16,16 +16,16 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password)
-          throw new Error("Missing credentials");
+          throw new Error("Brak danych logowania");
         const user = await prisma.user.findFirst({
           where: { email: credentials.email },
         });
-        if (!user) throw new Error("User not found");
+        if (!user) throw new Error("Nie znaleziono użytkownika");
         const isValid = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
-        if (!isValid) throw new Error("Invalid password");
+        if (!isValid) throw new Error("Nieprawidłowe hasło");
         return user;
       },
     }),
