@@ -7,6 +7,8 @@ const Footer = () => {
     return new Date().getFullYear();
   };
 
+  const socials = [<FaFacebook />, <FaTwitter />, <FaLinkedin />];
+
   const data = [
     {
       title: "Sklep",
@@ -88,12 +90,17 @@ const Footer = () => {
         <div>
           <div className="flex">
             <div className="w-1/2">
-              <h6>Ecommerce App</h6>
+              <h6>FoodieMarket</h6>
               <p>Gliwice, PL</p>
               <div className="flex gap-3">
-                <FaFacebook />
-                <FaTwitter />
-                <FaLinkedin />
+                {socials.map((social, idx) => (
+                  <div
+                    className="mt-2 hover:text-orange-500 cursor-pointer"
+                    key={idx}
+                  >
+                    {social}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="w-1/2 flex justify-between">

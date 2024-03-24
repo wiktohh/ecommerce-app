@@ -27,19 +27,14 @@ const OrdersPage = () => {
   }, [email]);
 
   return (
-    <Wrapper>
-      <div className="py-12 flex justify-between">
-        <AccountMenu />
-        <div className="w-4/5">
-          <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
-          <div className="w-full mx-auto">
-            {orders.map((order: any) => (
-              <Order key={order.id} order={order} />
-            ))}
-          </div>
-        </div>
+    <div className="w-full">
+      <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
+      <div className="w-full mx-auto">
+        {orders.map((order: any) => (
+          <Order key={order.id} order={order} />
+        ))}
       </div>
-    </Wrapper>
+    </div>
   );
 };
 

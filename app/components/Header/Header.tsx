@@ -34,7 +34,9 @@ const Header = () => {
         <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between items-center">
             <Link href="/">
-              <h1>Ecommerce App</h1>
+              <h1 className="font-semibold text-orange-500 text-2xl">
+                FoodieMarket
+              </h1>
             </Link>
             <Searchbar />
             <div className="flex gap-8">

@@ -10,16 +10,11 @@ const AccountPage = () => {
   console.log(session);
 
   return (
-    <Wrapper>
-      <div className="flex py-12 gap-12">
-        <AccountMenu />
-        <div>
-          <h2 className="text-2xl font-bold mb-6">Twoje konto</h2>
-          <div>Twoje imię: {session.data?.user?.name}</div>
-          <div>Twój email: {session.data?.user?.email}</div>
-        </div>
-      </div>
-    </Wrapper>
+    <div>
+      <h2 className="text-2xl font-bold mb-6">Twoje konto</h2>
+      <div>Twoje imię: {session.data?.user?.name}</div>
+      <div>Twój email: {session.data?.user?.email}</div>
+    </div>
   );
 };
 
