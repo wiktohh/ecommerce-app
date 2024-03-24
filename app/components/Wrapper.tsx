@@ -3,7 +3,11 @@ interface WrapperProps {
 }
 
 const Wrapper: React.FC<WrapperProps> = ({ children }) => {
-  return <div className="w-full max-w-7xl mx-auto">{children}</div>;
+  return (
+    <div className="w-full xl:max-w-7xl lg:max-w-5xl md:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      {children}
+    </div>
+  );
 };
 
 export default Wrapper;

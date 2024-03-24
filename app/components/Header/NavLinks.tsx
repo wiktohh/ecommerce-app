@@ -4,7 +4,7 @@ import { navLinks } from "./contants";
 const NavLinks = () => {
   return (
     <nav>
-      <ul className="mt-4 pb-4 flex justify-evenly">
+      <ul className="mt-4 pb-4 hidden md:flex md:justify-evenly">
         {navLinks.map((link, idx) => (
           <li key={idx}>
             <Link href={link.path}>
