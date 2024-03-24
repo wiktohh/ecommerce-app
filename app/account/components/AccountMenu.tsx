@@ -13,7 +13,7 @@ const AccountMenu = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between md:flex-col md:gap-2 w-full md:w-1/4 mb-8 md:mb-0">
+    <div className="flex flex-row justify-between md:justify-start md:flex-col md:gap-2 w-full md:w-1/4 mb-8 md:mb-0">
       {links.map((link) => (
         <Link key={link.name} href={link.path}>
           <span
