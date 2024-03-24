@@ -6,6 +6,7 @@ import Button from "@/app/components/Button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import { Product } from "@/app/types/types";
+import toast from "react-hot-toast";
 
 interface ProductProps {
   product: Product;
@@ -17,6 +18,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCartButtonClick = (product: Product) => {
+    toast.success("Produkt dodany do koszyka");
     dispatch(
       addToCart({
         name: product.name,

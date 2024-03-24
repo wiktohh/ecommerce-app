@@ -3,6 +3,7 @@ import Button from "../Button";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
+import toast from "react-hot-toast";
 
 interface SearchedProductProps {
   product: Product;
@@ -12,6 +13,7 @@ const SearchedProduct: React.FC<SearchedProductProps> = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCartButtonClick = (product: Product) => {
+    toast.success("Produkt dodany do koszyka");
     dispatch(
       addToCart({
         name: product.name,

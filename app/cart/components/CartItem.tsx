@@ -9,6 +9,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import { useEffect } from "react";
 import { ProductWithQuantity } from "@/app/types/types";
+import toast from "react-hot-toast";
 
 interface CartItemProps {
   item: ProductWithQuantity;
@@ -18,6 +19,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const dispatch = useDispatch();
 
   const removeFromCartHandler = (name: string) => {
+    toast.success("Produkt usunięty z koszyka");
     dispatch(removeFromCart(name));
   };
 

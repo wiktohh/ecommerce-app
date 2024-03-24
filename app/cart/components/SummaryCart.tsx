@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetCart } from "@/app/store/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
+import toast from "react-hot-toast";
 
 const SummaryCart = () => {
   const cart = useSelector((state: RootState) => state.cart.value);
@@ -59,8 +60,9 @@ const SummaryCart = () => {
           (inputRef.current as HTMLInputElement).disabled = true;
         }
         setIsButtonDisabled(true);
+        toast.success("Kod rabatowy został zastosowany");
       } else {
-        alert("Kod rabatowy jest nieprawidłowy");
+        toast.error("Kod rabatowy jest nieprawidłowy");
       }
     });
   };
