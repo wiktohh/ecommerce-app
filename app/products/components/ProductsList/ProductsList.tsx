@@ -64,7 +64,7 @@ const ProductsList: React.FC<ProductListProps> = ({
   };
 
   return (
-    <div className="w-5/6">
+    <div className="md:w-5/6">
       <div className="flex justify-between mt-4 mb-2">
         <h2 className="text-xl">Lista produktów: </h2>
 

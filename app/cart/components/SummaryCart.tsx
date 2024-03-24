@@ -93,7 +93,7 @@ const SummaryCart = () => {
   };
 
   return (
-    <div className="w-1/3 h-max bg-orange-100 rounded-xl p-4">
+    <div className="min-w-max w-2/3 md:w-1/3 h-max bg-orange-100 rounded-xl p-4">
       <h3 className="text-2xl pb-4">Podsumowanie</h3>
       <div className="flex justify-between">
         <p>Suma</p>

@@ -4,7 +4,7 @@ import { filterOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
-import { set } from "react-hook-form";
+import { IoMdClose } from "react-icons/io";
 
 interface FilterPanelProps {
   changePriceSort: (value: PriceSort) => void;
@@ -16,6 +16,7 @@ interface FilterPanelProps {
     shops: (string | null)[]
   ) => void;
   setFirstCurrentPage: () => void;
+  toggleMobileFilterPanel: () => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
@@ -23,6 +24,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   priceSort,
   onFilterChange,
   setFirstCurrentPage,
+  toggleMobileFilterPanel,
 }) => {
   const shopsOptions = ["biedronka", "lidl", "kaufland"];
 
@@ -93,14 +95,24 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   }, [categoryFromParameter, shopFromParameter]);
 
   return (
-    <div className="w-1/6">
+    <div className="absolute px-12 md:p-0 top-16 bottom-0 left-0 w-full md:w-1/6 md:relative shadow-lg md:shadow-none bg-white md:bg-transparent z-20">
+      <IoMdClose
+        onClick={toggleMobileFilterPanel}
+        className="absolute top-4 right-4 text-4xl hover:text-red-500 cursor-pointer md:hidden"
+      />
       {filterOptions.map((filterOption) => (
         <div key={filterOption.value}>
-          <h4 className="text-xl mt-4 mb-2">{filterOption.label}</h4>
+          <h4 className="text-3xl md:text-xl mt-4 mb-2">
+            {filterOption.label}
+          </h4>
           {filterOption.options.map((option) => (
-            <div key={option.value} className="flex gap-2">
+            <div
+              key={option.value}
+              className="flex items-center gap-4 md:gap-2 mt-2 md:mt-0"
+            >
               <input
                 name={filterOption.value}
+                className="w-6 h-6 md:w-3 md:h-3"
                 checked={
                   filterOption.type === "checkbox"
                     ? categories.includes(option.value) ||
@@ -112,12 +124,17 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 value={option.value}
                 id={option.value}
               />
-              <label htmlFor={option.value}>{option.label}</label>
+              <label
+                className="text-2xl md:text-sm lg:text-base"
+                htmlFor={option.value}
+              >
+                {option.label}
+              </label>
             </div>
           ))}
         </div>
       ))}
-      <div className="w-1/2 my-4">
+      <div className="md:w-1/2 my-4">
         <Button
           fullWidth={true}
           onClick={() => onFilterChange(categories, shops)}
