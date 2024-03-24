@@ -22,9 +22,9 @@ const PopularProducts = () => {
 
   return (
     <Wrapper>
-      <div className="pt-24">
-        <h3>Najpopularniejsze produkty</h3>
-        <p className="text-gray-400 mb-8">wybierane przez klientow</p>
+      <div className="pt-12 md:pt-24">
+        <h3 className="text-xl">Najpopularniejsze produkty</h3>
+        <p className="text-gray-400 text-lg mb-8">wybierane przez klientow</p>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center">

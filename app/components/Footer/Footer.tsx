@@ -89,13 +89,15 @@ const Footer = () => {
       <footer className="pb-12">
         <div>
           <div className="flex">
-            <div className="w-1/2">
-              <h6>FoodieMarket</h6>
-              <p>Gliwice, PL</p>
-              <div className="flex gap-3">
+            <div className="w-full md:w-1/2">
+              <h6 className="font-semibold text-orange-500 text-center md:text-left">
+                FoodieMarket
+              </h6>
+              <p className="text-center md:text-left">Gliwice, PL</p>
+              <div className="flex gap-3 justify-center md:justify-start">
                 {socials.map((social, idx) => (
                   <div
-                    className="mt-2 hover:text-orange-500 cursor-pointer"
+                    className="my-2 hover:text-orange-500 cursor-pointer"
                     key={idx}
                   >
                     {social}
@@ -103,11 +105,11 @@ const Footer = () => {
                 ))}
               </div>
             </div>
-            <div className="w-1/2 flex justify-between">
+            <div className="hidden md:flex md:w-1/2 md:justify-between">
               {data.map((item, idx) => (
                 <div key={idx}>
                   <h6 className="mb-4 font-semibold">{item.title}</h6>
-                  <ul className="flex flex-col">
+                  <ul className="md:flex md:flex-col">
                     {item.links.map((link, idx) => (
                       <Link
                         className="hover:text-red-500"
@@ -123,7 +125,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <p>© {getCurrentYear()} by Wiktor Rzeźnicki</p>
+        <p className="text-center md:text-left">
+          © {getCurrentYear()} by Wiktor Rzeźnicki
+        </p>
       </footer>
     </Wrapper>
   );
