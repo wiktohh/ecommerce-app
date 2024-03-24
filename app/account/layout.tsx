@@ -24,7 +24,7 @@ interface AccountLayoutProps {
 const AccountLayout: React.FC<AccountLayoutProps> = ({ children }) => {
   return (
     <Wrapper>
-      <div className="flex py-12">
+      <div className="flex flex-col md:flex-row py-12">
         <AccountMenu />
         {children}
       </div>

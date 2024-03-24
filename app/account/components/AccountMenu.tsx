@@ -13,13 +13,13 @@ const AccountMenu = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-2 w-1/4">
+    <div className="flex flex-row justify-between md:flex-col md:gap-2 w-full md:w-1/4 mb-8 md:mb-0">
       {links.map((link) => (
         <Link key={link.name} href={link.path}>
           <span
             className={`${
               pathname === link.path && "font-semibold"
-            } hover:text-red-500`}
+            } hover:text-red-500 w-1/3`}
           >
             {link.name}
           </span>
