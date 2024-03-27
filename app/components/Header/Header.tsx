@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/app/store/store";
 import { ProductWithQuantity } from "@/app/types/types";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import MobileMenu from "./MobileMenu";
 
 const Header = () => {
@@ -26,9 +26,12 @@ const Header = () => {
   };
 
   const getCartQuantity = () => {
-    return cart.reduce(
-      (acc: number, item: ProductWithQuantity) => acc + item.quantity,
-      0
+    return (
+      typeof window !== "undefined" &&
+      cart.reduce(
+        (acc: number, item: ProductWithQuantity) => acc + item.quantity,
+        0
+      )
     );
   };
 
@@ -37,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-orange-100 h-16 md:h-32">
+    <header className="w-full shadow-lg bg-orange-100 h-16 md:h-32">
       <Wrapper>
         <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between md:justify-evenly lg:justify-between items-center">
@@ -57,9 +60,13 @@ const Header = () => {
                 className="flex items-center gap-1 hover:text-orange-500 cursor-pointer"
               >
                 <FiShoppingCart className="text-2xl" />
-                <p>
-                  Koszyk {getCartQuantity() > 0 && `(${getCartQuantity()})`}
-                </p>
+                <p>Koszyk</p>
+                <span
+                  suppressHydrationWarning
+                  className="bg-orange-500 text-white rounded-full px-2"
+                >
+                  {getCartQuantity()}
+                </span>
               </button>
               {session.status === "authenticated" ? (
                 <div className="flex gap-8">

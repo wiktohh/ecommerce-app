@@ -5,7 +5,6 @@ export async function POST(req: Request) {
   console.clear();
   try {
     const { email } = await req.json();
-    console.log(email);
 
     const user = await prisma?.user.findUnique({
       where: {
@@ -13,7 +12,6 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log(user);
     if (!user) {
       return new NextResponse("User not found", { status: 404 });
     }
@@ -26,8 +24,6 @@ export async function POST(req: Request) {
         orderProducts: true,
       },
     });
-
-    console.log(orders);
 
     if (!orders) {
       return new NextResponse("No orders found", { status: 404 });

@@ -36,7 +36,6 @@ const ProductsList: React.FC<ProductListProps> = ({
       const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
         "-"
       )}&category=${categories.join("-")}`;
-      console.log(url);
       const response = await axios.get(url);
       const data = await response.data;
       setIsLoading(false);

@@ -6,8 +6,6 @@ export async function PATCH(req: Request) {
     const { email, currentPassword, repeatCurrentPassword, newPassword } =
       await req.json();
 
-    console.log(email, currentPassword, repeatCurrentPassword, newPassword);
-
     if (currentPassword !== repeatCurrentPassword) {
       return NextResponse.json(
         { error: "Hasła nie pasują do siebie" },

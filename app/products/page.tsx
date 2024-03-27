@@ -22,8 +22,6 @@ const ProductsPage = () => {
     window.innerWidth < window.innerHeight
   );
 
-  console.log(categoryFromParameter, shopFromParameter);
-
   useEffect(() => {
     if (categoryFromParameter) {
       setCategories([categoryFromParameter]);

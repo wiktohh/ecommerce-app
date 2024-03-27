@@ -46,7 +46,6 @@ const Searchbar = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       if (query.length > 2) {
-        console.log(category, query);
         const response = await axios.post(
           "/api/products/search",
           { category, query },
@@ -58,7 +57,6 @@ const Searchbar = () => {
         } else {
           setSearchedProducts(data);
         }
-        console.log(data);
       }
     };
     fetchProducts();

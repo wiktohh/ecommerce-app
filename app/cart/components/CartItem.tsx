@@ -35,7 +35,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         <button onClick={() => dispatch(decreaseQuantity(item.name))}>
           <CiCircleMinus className="text-3xl hover:text-orange-600" />
         </button>
-        <span>Ilość: {item.quantity}</span>
+        <span className="text-center">Ilość: {item.quantity}</span>
         <button onClick={() => dispatch(increaseQuantity(item.name))}>
           <CiCirclePlus className="text-3xl hover:text-orange-600" />
         </button>

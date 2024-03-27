@@ -51,10 +51,6 @@ export async function GET(req: NextRequest) {
       where: whereCondition,
     });
 
-    console.log(products);
-    console.log(whereCondition);
-    console.log(page, limit, shop, category);
-
     return NextResponse.json({ products, productsLength });
   } catch (e) {
     return new NextResponse((e as Error).message, { status: 500 });

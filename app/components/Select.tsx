@@ -34,7 +34,7 @@ const Select: React.FC<SelectProps> = ({
           <option
             className="text-center"
             key={index}
-            selected={selectedValue === option.value}
+            defaultValue={selectedValue}
             value={option.value}
           >
             {option.label}

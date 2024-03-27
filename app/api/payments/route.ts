@@ -13,8 +13,6 @@ export async function POST(req: Request) {
 
     const { email, cart, deliveryPrice } = await req.json();
 
-    console.log(cart);
-
     const lineItems = cart.map((item: ProductWithQuantity) => ({
       price_data: {
         currency: "pln",
@@ -48,11 +46,6 @@ export async function POST(req: Request) {
       cancel_url: `${process.env.HOST_NAME}/cancel`,
     });
 
-    console.clear();
-
-    console.log(email);
-    console.log(cart);
-
     const newOrder = await prisma.order.create({
       data: {
         userId: email as string,
@@ -79,7 +72,6 @@ export async function POST(req: Request) {
         orderProducts: true,
       },
     });
-    console.log(newOrder);
 
     if (!newOrder) {
       throw new Error("Nie udało się utworzyć zamówienia");

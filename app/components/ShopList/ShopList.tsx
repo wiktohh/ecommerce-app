@@ -26,7 +26,7 @@ const ShopList = () => {
 
   return (
     <Wrapper>
-      <h3 className="pt-12 md:pt-24 text-2xl">Dostępne sklepy</h3>
+      <h3 className="pt-12 md:pt-20 text-2xl">Dostępne sklepy</h3>
       <div className="pt-8 flex flex-col items-center gap-4 flex-wrap md:flex-row justify-around">
         {tmpShops.map((shop) => (
           <div key={shop.id} className="relative">

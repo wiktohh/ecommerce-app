@@ -7,8 +7,6 @@ import AccountMenu from "./components/AccountMenu";
 const AccountPage = () => {
   const session = useSession();
 
-  console.log(session);
-
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Twoje konto</h2>

@@ -18,7 +18,6 @@ const ChangePasswordForm = () => {
   const session = useSession();
 
   const handleButtonClick: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     try {
       const response = await axios.patch(
         "/api/change-password",
@@ -35,10 +34,8 @@ const ChangePasswordForm = () => {
         }
       );
       const responseData = await response.data;
-      console.log(responseData);
     } catch (error: any) {
       setError(error.response.data.error);
-      console.log(error.response.data.error);
     }
   };
 
