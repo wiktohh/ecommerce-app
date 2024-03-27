@@ -32,10 +32,14 @@ const OrdersPage = () => {
   }, [email]);
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-auto">
       <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
+      {isLoading && (
+        <div className="flex justify-center">
+          <LoadingSpinner />
+        </div>
+      )}
       <div className="w-full mx-auto">
-        {isLoading && <LoadingSpinner />}
         {!isLoading &&
           orders.map((order: any) => <Order key={order.id} order={order} />)}
       </div>
