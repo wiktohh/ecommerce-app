@@ -5,7 +5,10 @@ import { ProductWithQuantity } from "../types/types";
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    value: JSON.parse(localStorage.getItem("cart") as string) || [],
+    value:
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("cart") as string) || []
+        : [],
   },
   reducers: {
     addToCart: (state, action) => {
