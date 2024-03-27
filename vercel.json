@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "app/",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["prisma/schema.prisma"]
+      },
+      "postbuild": {
+        "commands": ["prisma generate"]
+      }
+    }
+  ]
+}
