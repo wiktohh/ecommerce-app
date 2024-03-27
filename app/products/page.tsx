@@ -5,6 +5,7 @@ import ProductsList from "./components/ProductsList/ProductsList";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export type PriceSort = "asc" | "desc";
 
@@ -106,7 +107,7 @@ const ProductsPage = () => {
           </Button>
         </div>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           {showFilterPanel && (
             <FilterPanel
               changePriceSort={changePriceSort}

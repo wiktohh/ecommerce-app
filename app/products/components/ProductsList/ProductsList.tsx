@@ -33,6 +33,7 @@ const ProductsList: React.FC<ProductListProps> = ({
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
         "-"
       )}&category=${categories.join("-")}`;
