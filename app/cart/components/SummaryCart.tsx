@@ -81,10 +81,10 @@ const SummaryCart = () => {
         }
       );
       const session = await response.data;
-      const result = stripe?.redirectToCheckout({
+      const result = await stripe?.redirectToCheckout({
         sessionId: session.id,
       });
-      if (result) {
+      if (result && !result.error) {
         dispatch(resetCart());
       }
     } else {
