@@ -7,7 +7,20 @@ const Footer = () => {
     return new Date().getFullYear();
   };
 
-  const socials = [<FaFacebook />, <FaTwitter />, <FaLinkedin />];
+  const socials = [
+    {
+      id: 1,
+      icon: <FaFacebook />,
+    },
+    {
+      id: 2,
+      icon: <FaTwitter />,
+    },
+    {
+      id: 3,
+      icon: <FaLinkedin />,
+    },
+  ];
 
   const data = [
     {
@@ -95,26 +108,26 @@ const Footer = () => {
               </h6>
               <p className="text-center md:text-left">Gliwice, PL</p>
               <div className="flex gap-3 justify-center md:justify-start">
-                {socials.map((social, idx) => (
+                {socials.map((social) => (
                   <div
                     className="my-2 hover:text-orange-500 cursor-pointer"
-                    key={idx}
+                    key={social.id}
                   >
-                    {social}
+                    {social.icon}
                   </div>
                 ))}
               </div>
             </div>
             <div className="hidden md:flex md:w-1/2 md:justify-between">
-              {data.map((item, idx) => (
-                <div key={idx}>
+              {data.map((item) => (
+                <div key={item.title}>
                   <h6 className="mb-4 font-semibold">{item.title}</h6>
                   <ul className="md:flex md:flex-col">
-                    {item.links.map((link, idx) => (
+                    {item.links.map((link) => (
                       <Link
                         className="hover:text-red-500"
                         href={link.url}
-                        key={idx}
+                        key={link.url}
                       >
                         {link.name}
                       </Link>

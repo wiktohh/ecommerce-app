@@ -5,11 +5,11 @@ import { FaCartPlus } from "react-icons/fa";
 import Button from "@/app/components/Button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
-import { Product } from "@/app/types/types";
+import { ProductInterface } from "@/app/types/types";
 import toast from "react-hot-toast";
 
 interface ProductProps {
-  product: Product;
+  product: ProductInterface;
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
@@ -17,7 +17,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   const dispatch = useDispatch();
 
-  const handleAddToCartButtonClick = (product: Product) => {
+  const handleAddToCartButtonClick = (product: ProductInterface) => {
     toast.success("Produkt dodany do koszyka");
     dispatch(
       addToCart({

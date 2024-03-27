@@ -1,11 +1,11 @@
-export interface Product {
+export interface ProductInterface {
   name: string;
   description: string;
   price: number;
   image: string;
 }
 
-export interface ProductWithQuantity extends Product {
+export interface ProductWithQuantity extends ProductInterface {
   quantity: number;
 }
 

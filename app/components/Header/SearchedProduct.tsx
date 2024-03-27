@@ -1,4 +1,4 @@
-import { Product } from "@/app/types/types";
+import { ProductInterface } from "@/app/types/types";
 import Button from "../Button";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -6,13 +6,13 @@ import { addToCart } from "@/app/store/cartSlice";
 import toast from "react-hot-toast";
 
 interface SearchedProductProps {
-  product: Product;
+  product: ProductInterface;
 }
 
 const SearchedProduct: React.FC<SearchedProductProps> = ({ product }) => {
   const dispatch = useDispatch();
 
-  const handleAddToCartButtonClick = (product: Product) => {
+  const handleAddToCartButtonClick = (product: ProductInterface) => {
     toast.success("Produkt dodany do koszyka");
     dispatch(
       addToCart({
