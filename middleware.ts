@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get(
-    "next-auth.session-token" || "__Secure-next-auth.session-token"
-  )?.value;
+  const isToken =
+    req.cookies.get("__Secure-next-auth.session-token") ||
+    req.cookies.get("next-auth.session-token");
   const nextPathname = req.nextUrl.pathname;
 
-  if (!token && nextPathname.startsWith("/account")) {
+  if (!isToken && nextPathname.startsWith("/account")) {
     return NextResponse.redirect(`${process.env.HOST_NAME}/auth`);
   }
 }
