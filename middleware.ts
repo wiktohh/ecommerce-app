@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("next-auth.session-token")?.value;
+  const token = req.cookies.get(
+    "next-auth.session-token" || "__Secure-next-auth.session-token"
+  )?.value;
   const nextPathname = req.nextUrl.pathname;
 
   if (!token && nextPathname.startsWith("/account")) {
