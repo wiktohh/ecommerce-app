@@ -32,10 +32,6 @@ const Footer = () => {
         },
         {
           name: "Mapa",
-          url: "/contact",
-        },
-        {
-          name: "Mapa",
           url: "/map",
         },
         {

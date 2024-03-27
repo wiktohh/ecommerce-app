@@ -11,6 +11,9 @@ export const cartSlice = createSlice({
         : [],
   },
   reducers: {
+    inicializeCart: (state, action) => {
+      state.value = action.payload;
+    },
     addToCart: (state, action) => {
       const { name } = action.payload;
       const product = state.value.find(
@@ -51,13 +54,21 @@ export const cartSlice = createSlice({
       state.value = [];
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
+    numberOfItems: (state) => {
+      return state.value.reduce(
+        (acc: number, item: ProductWithQuantity) => acc + item.quantity,
+        0
+      );
+    },
   },
 });
 
 export const {
+  numberOfItems,
   addToCart,
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
   resetCart,
+  inicializeCart,
 } = cartSlice.actions;

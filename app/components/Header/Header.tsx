@@ -7,33 +7,38 @@ import NavLinks from "./NavLinks";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Button from "../Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/app/store/store";
 import { ProductWithQuantity } from "@/app/types/types";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useLayoutEffect, useState } from "react";
 import MobileMenu from "./MobileMenu";
+import { inicializeCart, numberOfItems } from "@/app/store/cartSlice";
 
 const Header = () => {
-  const cart = useSelector((state: RootState) => state.cart.value);
   const session = useSession();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartQuantity, setCartQuantity] = useState(0);
+  const cart = useSelector((state: RootState) => state.cart.value);
+  const dispatch = useDispatch();
 
   const handleCartClick = () => {
     router.push("/cart");
   };
-
   const getCartQuantity = () => {
-    return (
-      typeof window !== "undefined" &&
+    setCartQuantity(
       cart.reduce(
         (acc: number, item: ProductWithQuantity) => acc + item.quantity,
         0
       )
     );
   };
+
+  useEffect(() => {
+    getCartQuantity();
+  }, [cart]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -61,12 +66,14 @@ const Header = () => {
               >
                 <FiShoppingCart className="text-2xl" />
                 <p>Koszyk</p>
-                <span
-                  suppressHydrationWarning
-                  className="bg-orange-500 text-white rounded-full px-2"
-                >
-                  {getCartQuantity()}
-                </span>
+                {cartQuantity > 0 && (
+                  <span
+                    suppressHydrationWarning
+                    className="bg-orange-500 text-white rounded-full px-2"
+                  >
+                    {cartQuantity}
+                  </span>
+                )}
               </button>
               {session.status === "authenticated" ? (
                 <div className="flex gap-8">
