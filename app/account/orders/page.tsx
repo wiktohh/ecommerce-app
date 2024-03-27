@@ -5,14 +5,18 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import Wrapper from "@/app/components/Wrapper";
 import Order from "./components/Order";
+import { set } from "react-hook-form";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const session = useSession();
   const email = session.data?.user?.email;
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setIsLoading(true);
       if (email) {
         const response = await axios.post(
           "/api/orders",
@@ -22,6 +26,7 @@ const OrdersPage = () => {
         const data = await response.data;
         setOrders(data);
       }
+      setIsLoading(false);
     };
     fetchOrders();
   }, [email]);
@@ -30,9 +35,9 @@ const OrdersPage = () => {
     <div className="w-full">
       <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
       <div className="w-full mx-auto">
-        {orders.map((order: any) => (
-          <Order key={order.id} order={order} />
-        ))}
+        {isLoading && <LoadingSpinner />}
+        {!isLoading &&
+          orders.map((order: any) => <Order key={order.id} order={order} />)}
       </div>
     </div>
   );
