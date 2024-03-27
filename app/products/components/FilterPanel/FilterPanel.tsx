@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
 import { IoMdClose } from "react-icons/io";
+import { send } from "process";
 
 interface FilterPanelProps {
   changePriceSort: (value: PriceSort) => void;
@@ -17,6 +18,12 @@ interface FilterPanelProps {
   ) => void;
   setFirstCurrentPage: () => void;
   toggleMobileFilterPanel: () => void;
+  sendParamsToParent: (
+    category: string | null,
+    shop: string | null,
+    categories: (string | null)[],
+    shops: (string | null)[]
+  ) => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
@@ -25,6 +32,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   onFilterChange,
   setFirstCurrentPage,
   toggleMobileFilterPanel,
+  sendParamsToParent,
 }) => {
   const shopsOptions = ["biedronka", "lidl", "kaufland"];
 
@@ -34,6 +42,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const searchParams = useSearchParams();
   const categoryFromParameter = searchParams.get("category");
   const shopFromParameter = searchParams.get("shop");
+
+  const sendParams = () => {
+    sendParamsToParent(
+      categoryFromParameter,
+      shopFromParameter,
+      categories,
+      shops
+    );
+  };
+
+  useEffect(() => {
+    sendParams();
+  }, [categoryFromParameter, shopFromParameter, categories, shops]);
 
   // to refactor some day XD
   const handleFilter = (

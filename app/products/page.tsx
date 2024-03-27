@@ -2,7 +2,7 @@
 import FilterPanel from "./components/FilterPanel/FilterPanel";
 import Wrapper from "../components/Wrapper";
 import ProductsList from "./components/ProductsList/ProductsList";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
 
@@ -12,15 +12,40 @@ const ProductsPage = () => {
   const [priceSort, setPriceSort] = useState<PriceSort>("asc");
   const [showFilterPanel, setShowFilterPanel] = useState(false);
 
-  const searchParams = useSearchParams();
-  const [categories, setCategories] = useState([searchParams.get("category")]);
-  const [shops, setShops] = useState([searchParams.get("shop")]);
+  let categoryFromParameter: string | null = null;
+  let shopFromParameter: string | null = null;
+
+  const sendParamsToParent = (
+    category: string | null,
+    shop: string | null,
+    categories: (string | null)[],
+    shops: (string | null)[]
+  ) => {
+    if (category) {
+      categoryFromParameter = category;
+    }
+    if (shop) {
+      shopFromParameter = shop;
+    }
+    if (categories) {
+      setCategories(categories);
+    }
+    if (shops) {
+      setShops(shops);
+    }
+  };
+
+  const [categories, setCategories] = useState<(string | null)[]>([]);
+  const [shops, setShops] = useState<(string | null)[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const categoryFromParameter = searchParams.get("category");
-  const shopFromParameter = searchParams.get("shop");
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth < window.innerHeight
-  );
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < window.innerHeight);
+    }
+  }, []);
 
   useEffect(() => {
     if (categoryFromParameter) {
@@ -56,7 +81,7 @@ const ProductsPage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
         setShowFilterPanel(false);
       } else {
         setShowFilterPanel(true);
@@ -81,24 +106,27 @@ const ProductsPage = () => {
           </Button>
         </div>
 
-        {showFilterPanel && (
-          <FilterPanel
-            changePriceSort={changePriceSort}
+        <Suspense fallback={<div>Loading...</div>}>
+          {showFilterPanel && (
+            <FilterPanel
+              changePriceSort={changePriceSort}
+              priceSort={priceSort}
+              categories={categories}
+              shops={shops}
+              onFilterChange={applyFilter}
+              setFirstCurrentPage={setFirstCurrentPage}
+              toggleMobileFilterPanel={toggleMobileFilterPanel}
+              sendParamsToParent={sendParamsToParent}
+            />
+          )}
+          <ProductsList
             priceSort={priceSort}
             categories={categories}
             shops={shops}
-            onFilterChange={applyFilter}
-            setFirstCurrentPage={setFirstCurrentPage}
-            toggleMobileFilterPanel={toggleMobileFilterPanel}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
           />
-        )}
-        <ProductsList
-          priceSort={priceSort}
-          categories={categories}
-          shops={shops}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        </Suspense>
       </div>
     </Wrapper>
   );

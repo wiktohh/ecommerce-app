@@ -42,7 +42,9 @@ const ProductsList: React.FC<ProductListProps> = ({
       setTotalProducts(data.productsLength);
       setProducts(data.products);
     };
-    fetchProducts();
+    if (categories.length > 0 || shops.length > 0) {
+      fetchProducts();
+    }
   }, [currentPage, itemsPerPage, priceSort, categories, shops]);
 
   const handleNextPage = () => {
