@@ -73,7 +73,7 @@ const ProductsList: React.FC<ProductListProps> = ({
         <Select
           label="Wybierz ilość produktów"
           onChange={handleSelectChange}
-          selectedValue="10"
+          selectedValue={itemsPerPage.toString()}
           options={itemsPerPageOptions}
         />
       </div>

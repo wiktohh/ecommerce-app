@@ -26,17 +26,13 @@ const Select: React.FC<SelectProps> = ({
           onChange(e.target.value);
         }}
         id="optionSelect"
+        value={selectedValue}
         className={`outline-none border-none ${
           roundedFull ? "rounded-full" : "rounded-md"
         } text-center cursor-pointer bg-gray-200 px-2 py-1 text-sm text-black font-semibold hover:bg-gray-300`}
       >
         {options.map((option, index) => (
-          <option
-            className="text-center"
-            key={index}
-            defaultValue={selectedValue}
-            value={option.value}
-          >
+          <option className="text-center" key={index} value={option.value}>
             {option.label}
           </option>
         ))}
