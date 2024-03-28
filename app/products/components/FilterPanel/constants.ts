@@ -35,3 +35,5 @@ export const filterOptions = [
     ],
   },
 ];
+
+export const shopsOptions = ["biedronka", "lidl", "kaufland"];

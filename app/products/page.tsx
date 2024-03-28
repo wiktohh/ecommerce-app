@@ -3,18 +3,22 @@ import FilterPanel from "./components/FilterPanel/FilterPanel";
 import Wrapper from "../components/Wrapper";
 import ProductsList from "./components/ProductsList/ProductsList";
 import { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
 import LoadingSpinner from "../components/LoadingSpinner";
+import MobileFilterPanel from "./components/FilterPanel/MobileFilterPanel";
 
 export type PriceSort = "asc" | "desc";
 
 const ProductsPage = () => {
   const [priceSort, setPriceSort] = useState<PriceSort>("asc");
-  const [showFilterPanel, setShowFilterPanel] = useState(false);
+  const [showMobileFilterPanel, setShowMobileFilterPanel] = useState(false);
 
-  let categoryFromParameter: string | null = null;
-  let shopFromParameter: string | null = null;
+  const [categoryFromParameter, setCategoryFromParameter] = useState<
+    string | null
+  >(null);
+  const [shopFromParameter, setShopFromParameter] = useState<string | null>(
+    null
+  );
 
   const sendParamsToParent = (
     category: string | null,
@@ -23,10 +27,10 @@ const ProductsPage = () => {
     shops: (string | null)[]
   ) => {
     if (category) {
-      categoryFromParameter = category;
+      setCategoryFromParameter(category);
     }
     if (shop) {
-      shopFromParameter = shop;
+      setShopFromParameter(shop);
     }
     if (categories) {
       setCategories(categories);
@@ -36,17 +40,11 @@ const ProductsPage = () => {
     }
   };
 
+  console.log(priceSort);
+
   const [categories, setCategories] = useState<(string | null)[]>([]);
   const [shops, setShops] = useState<(string | null)[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < window.innerHeight);
-    }
-  }, []);
 
   useEffect(() => {
     if (categoryFromParameter) {
@@ -67,48 +65,31 @@ const ProductsPage = () => {
   ) => {
     setCategories(categories);
     setShops(shops);
-    if (isMobile) {
-      setShowFilterPanel(false);
-    }
   };
 
   const setFirstCurrentPage = () => {
     setCurrentPage(1);
   };
 
-  const toggleMobileFilterPanel = () => {
-    setShowFilterPanel((prev) => !prev);
+  const openPanel = () => {
+    setShowMobileFilterPanel(true);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
-        setShowFilterPanel(false);
-      } else {
-        setShowFilterPanel(true);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const closePanel = () => {
+    setShowMobileFilterPanel(false);
+  };
 
   return (
     <Wrapper>
       <div className="flex flex-col md:flex-row w-100 my-8">
         <div className="block w-1/3 md:hidden">
-          <Button fullWidth={true} onClick={toggleMobileFilterPanel}>
+          <Button fullWidth={true} onClick={openPanel}>
             Filtry
           </Button>
         </div>
 
         <Suspense fallback={<LoadingSpinner />}>
-          {showFilterPanel && (
+          <div className="w-1/6 hidden md:block">
             <FilterPanel
               changePriceSort={changePriceSort}
               priceSort={priceSort}
@@ -116,10 +97,22 @@ const ProductsPage = () => {
               shops={shops}
               onFilterChange={applyFilter}
               setFirstCurrentPage={setFirstCurrentPage}
-              toggleMobileFilterPanel={toggleMobileFilterPanel}
               sendParamsToParent={sendParamsToParent}
             />
-          )}
+          </div>
+          <div className="w-1/6 block md:hidden">
+            <MobileFilterPanel
+              changePriceSort={changePriceSort}
+              priceSort={priceSort}
+              categories={categories}
+              shops={shops}
+              onFilterChange={applyFilter}
+              setFirstCurrentPage={setFirstCurrentPage}
+              closePanel={closePanel}
+              sendParamsToParent={sendParamsToParent}
+              showFilterPanel={showMobileFilterPanel}
+            />
+          </div>
           <ProductsList
             priceSort={priceSort}
             categories={categories}

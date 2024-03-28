@@ -95,7 +95,7 @@ const Footer = () => {
 
   return (
     <Wrapper>
-      <footer className="pb-12">
+      <footer>
         <div>
           <div className="flex">
             <div className="w-full md:w-1/2">

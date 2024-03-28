@@ -4,6 +4,8 @@ import { filterOptions, shopsOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
+import { IoMdClose } from "react-icons/io";
+import { motion } from "framer-motion";
 import { handleFilter, sendParams } from "../../utilts";
 
 interface FilterPanelProps {
@@ -12,60 +14,49 @@ interface FilterPanelProps {
   categories: (string | null)[];
   shops: (string | null)[];
   onFilterChange: (
-    categories: (string | null)[],
-    shops: (string | null)[]
+    localCategories: (string | null)[],
+    localShops: (string | null)[]
   ) => void;
   setFirstCurrentPage: () => void;
+  closePanel: () => void;
   sendParamsToParent: (
     category: string | null,
     shop: string | null,
     categories: (string | null)[],
     shops: (string | null)[]
   ) => void;
+  showFilterPanel: boolean;
 }
 
-type NullableString = string | null;
-
-const FilterPanel: React.FC<FilterPanelProps> = ({
+const MobileFilterPanel: React.FC<FilterPanelProps> = ({
   changePriceSort,
   priceSort,
   onFilterChange,
   setFirstCurrentPage,
+  closePanel,
   sendParamsToParent,
+  showFilterPanel,
   categories,
   shops,
 }) => {
-  const [localCategories, setLocalCategories] = useState<NullableString[]>([
+  const [localCategories, setLocalCategories] = useState<(string | null)[]>([
     ...categories,
   ]);
-  const [localShops, setLocalShops] = useState<NullableString[]>([...shops]);
+  const [localShops, setLocalShops] = useState<(string | null)[]>([...shops]);
 
   const searchParams = useSearchParams();
   const categoryFromParameter = searchParams.get("category");
   const shopFromParameter = searchParams.get("shop");
-
-  console.log(priceSort);
 
   useEffect(() => {
     setLocalCategories([...categories]);
     setLocalShops([...shops]);
   }, [categories, shops]);
 
-  useEffect(() => {
-    sendParams(
-      categoryFromParameter,
-      shopFromParameter,
-      localCategories,
-      localShops,
-      sendParamsToParent
-    );
-    if (categoryFromParameter) {
-      setLocalCategories([categoryFromParameter]);
-    }
-    if (shopFromParameter) {
-      setLocalShops([shopFromParameter]);
-    }
-  }, [categoryFromParameter, shopFromParameter]);
+  const handleButtonClick = () => {
+    onFilterChange(localCategories, localShops);
+    closePanel();
+  };
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -83,30 +74,61 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     );
   };
 
+  useEffect(() => {
+    sendParams(
+      categoryFromParameter,
+      shopFromParameter,
+      localCategories,
+      localShops,
+      sendParamsToParent
+    );
+    if (categoryFromParameter) {
+      setLocalCategories([categoryFromParameter]);
+    }
+    if (shopFromParameter) {
+      setLocalShops([shopFromParameter]);
+    }
+  }, [categoryFromParameter, shopFromParameter]);
+
+  const variants = {
+    open: { x: "-100%" },
+    closed: { x: 0 },
+  };
+
   return (
-    <div className="p-0 top-16 bottom-0 left-0 shadow-none bg-transparent z-20">
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={showFilterPanel ? "closed" : "open"}
+      variants={variants}
+      transition={{ stiffness: 100, duration: 0.3 }}
+      className="absolute px-12 md:p-0 top-16 bottom-0 left-0 w-full shadow-lg bg-white z-20 overflow-hidden"
+    >
+      <IoMdClose
+        onClick={closePanel}
+        className="absolute top-4 right-4 text-4xl hover:text-red-500 cursor-pointer"
+      />
       {filterOptions.map((filterOption) => (
         <div key={filterOption.value}>
-          <h4 className="text-xl mt-4 mb-2">{filterOption.label}</h4>
+          <h4 className="text-2xl mt-4 mb-2">{filterOption.label}</h4>
           {filterOption.options.map((option) => (
-            <div key={option.value} className="flex items-center gap-2 mt-0">
+            <div key={option.value} className="flex items-center gap-4 mt-2">
               <input
-                name={filterOption.value}
-                className="w-3 h-3 cursor-pointer"
+                name={`mobile-${filterOption.value}`}
+                className="w-4 h-4 cursor-pointer"
                 checked={
                   filterOption.type === "checkbox"
                     ? localCategories.includes(option.value) ||
                       localShops.includes(option.value)
-                    : priceSort == option.value
+                    : priceSort === option.value
                 }
                 onChange={(e) => handleFilterChange(e, option.value)}
                 type={filterOption.type}
                 value={option.value}
-                id={option.value}
+                id={`mobile-${option.value}`}
               />
               <label
-                className="text-sm lg:text-base cursor-pointer "
-                htmlFor={option.value}
+                className="text-xl cursor-pointer"
+                htmlFor={`mobile-${option.value}`}
               >
                 {option.label}
               </label>
@@ -114,16 +136,13 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           ))}
         </div>
       ))}
-      <div className="w-1/2 my-4">
-        <Button
-          fullWidth={true}
-          onClick={() => onFilterChange(localCategories, localShops)}
-        >
+      <div className="my-4">
+        <Button fullWidth={true} onClick={handleButtonClick}>
           <span className="text-base">Filtruj</span>
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-export default FilterPanel;
+export default MobileFilterPanel;

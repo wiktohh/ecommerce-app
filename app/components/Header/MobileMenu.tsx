@@ -1,49 +1,89 @@
-import Link from "next/link";
 import { navLinks } from "./contants";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
-const MobileMenu = () => {
+interface MobileMenuProps {
+  isOpen: boolean;
+  toggleMobileMenu: () => void;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({
+  isOpen,
+  toggleMobileMenu,
+}) => {
   const session = useSession();
 
+  const router = useRouter();
+
+  const handleLinkClick = (link: string) => {
+    router.push(link);
+    toggleMobileMenu();
+  };
+
+  const handleSignOutButton = () => {
+    signOut();
+    toggleMobileMenu();
+  };
+
+  const variants = {
+    open: { x: "-100%" },
+    closed: { x: "0%" },
+  };
   return (
-    <div className="absolute z-20 bg-white left-0 top-16 right-0 bottom-0 md:hidden">
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={!isOpen ? "open" : "closed"}
+      variants={variants}
+      transition={{ stiffness: 100, duration: 0.3 }}
+      className="absolute z-20 bg-white left-0 top-16 right-0 bottom-0 md:hidden overflow-hidden"
+    >
       <ul className="flex flex-col items-center h-full justify-center gap-4">
         {navLinks.map((link) => (
           <li key={link.name}>
-            <Link href={link.path}>
+            <button onClick={() => handleLinkClick(link.path)}>
               <span className="text-orange-500 hover:underline text-2xl">
                 {link.name}
               </span>
-            </Link>
+            </button>
           </li>
         ))}
 
         <li className="mt-12">
-          <Link href="/cart">
+          <button onClick={() => handleLinkClick("/cart")}>
             <span className="text-orange-500 hover:underline text-2xl">
               Koszyk
             </span>
-          </Link>
+          </button>
         </li>
         {session.status === "authenticated" ? (
-          <li>
-            <Link href="/account">
-              <span className="text-orange-500 hover:underline text-2xl">
-                Konto
-              </span>
-            </Link>
-          </li>
+          <>
+            <li>
+              <button onClick={() => handleLinkClick("/account")}>
+                <span className="text-orange-500 hover:underline text-2xl">
+                  Konto
+                </span>
+              </button>
+            </li>
+            <li className="mt-12">
+              <button onClick={handleSignOutButton}>
+                <span className="text-orange-500 hover:underline text-2xl">
+                  Wyloguj się
+                </span>
+              </button>
+            </li>
+          </>
         ) : (
           <li>
-            <Link href="/auth">
+            <button onClick={() => handleLinkClick("/auth")}>
               <span className="text-orange-500 hover:underline text-2xl">
                 Zaloguj się
               </span>
-            </Link>
+            </button>
           </li>
         )}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 

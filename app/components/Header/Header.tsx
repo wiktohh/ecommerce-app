@@ -12,9 +12,12 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/app/store/store";
 import { ProductWithQuantity } from "@/app/types/types";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { use, useEffect, useLayoutEffect, useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import { Suspense, use, useEffect, useLayoutEffect, useState } from "react";
 import MobileMenu from "./MobileMenu";
+import { useCycle } from "framer-motion";
 import { inicializeCart, numberOfItems } from "@/app/store/cartSlice";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Header = () => {
   const session = useSession();
@@ -55,10 +58,17 @@ const Header = () => {
               </h1>
             </Link>
             <Searchbar />
-            <GiHamburgerMenu
-              className="text-3xl md:hidden"
-              onClick={toggleMobileMenu}
-            />
+            {!isMobileMenuOpen ? (
+              <GiHamburgerMenu
+                className="text-3xl cursor-pointer md:hidden hover:text-orange-500"
+                onClick={toggleMobileMenu}
+              />
+            ) : (
+              <IoMdClose
+                className="text-3xl cursor-pointer md:hidden  hover:text-orange-500"
+                onClick={toggleMobileMenu}
+              />
+            )}
             <div className="hidden md:flex gap-8">
               <button
                 onClick={handleCartClick}
@@ -99,7 +109,12 @@ const Header = () => {
           </div>
         </div>
         <NavLinks />
-        {isMobileMenuOpen && <MobileMenu />}
+        <Suspense fallback={<LoadingSpinner />}>
+          <MobileMenu
+            isOpen={isMobileMenuOpen}
+            toggleMobileMenu={toggleMobileMenu}
+          />
+        </Suspense>
       </Wrapper>
     </header>
   );
