@@ -6,7 +6,7 @@ import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
 
 const PopularProducts = () => {
-  const [s, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
