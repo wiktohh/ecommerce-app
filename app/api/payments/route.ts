@@ -3,9 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/lib/prisma";
 
 export async function POST(req: Request) {
   try {
