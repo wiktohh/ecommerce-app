@@ -4,7 +4,7 @@ import Select from "../Select";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import SearchedProduct from "./SearchedProduct";
-import { Product } from "@prisma/client";
+import { ProductInterface } from "@/app/types/types";
 
 const categories = [
   { label: "Wszystkie", value: "all" },
@@ -17,7 +17,7 @@ const categories = [
   { label: "Słodycze", value: "sweets" },
 ];
 
-type SearchedProducts = Product[] | string | undefined;
+type SearchedProducts = ProductInterface[] | string | undefined;
 
 const Searchbar = () => {
   const NOT_FOUND = "Nie znaleziono produktów";
@@ -113,7 +113,7 @@ const Searchbar = () => {
             ref={searchRef}
             className="absolute top-8 w-full bg-white px-2 py-4 rounded-xl shadow-lg my-1"
           >
-            {searchedProducts.map((product: Product, idx: number) => (
+            {searchedProducts.map((product: ProductInterface, idx: number) => (
               <SearchedProduct key={idx} product={product} />
             ))}
           </div>
