@@ -10,6 +10,7 @@ import { CiCircleMinus } from "react-icons/ci";
 import { useEffect } from "react";
 import { ProductWithQuantity } from "@/app/types/types";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface CartItemProps {
   item: ProductWithQuantity;
@@ -25,9 +26,11 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 
   return (
     <div className="w-full bg-orange-100 rounded-2xl flex justify-between items-center h-40 p-4 mb-4">
-      <img
+      <Image
         src={item.image}
-        className="w-32 h-32 border-4 border-orange-400"
+        width={128}
+        height={128}
+        className="border-4 border-orange-400"
         alt="product image"
       />
       <span className="w-1/4 text-center">{item.name}</span>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface OrderProps {
   order: {
     id: number;
@@ -25,10 +27,12 @@ const Order: React.FC<OrderProps> = ({ order }) => {
         {order.orderProducts.map((product: any) => (
           <div key={product.id} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
-                className="w-16 h-16 object-cover"
+                width={64}
+                height={64}
+                className="object-cover"
               />
               <div>
                 <h4 className="font-bold">{product.name}</h4>

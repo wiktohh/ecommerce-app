@@ -41,7 +41,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           </Button>
         </div>
       )}
-      <img src={product.image} alt="product image" className="w-24" />
+      <Image src={product.image} alt="product image" width={96} height={96} />
       <div>
         <h3>{product.name}</h3>
         <p>{product.price}</p>

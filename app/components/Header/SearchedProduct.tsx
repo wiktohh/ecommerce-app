@@ -4,6 +4,7 @@ import { FaCartPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/store/cartSlice";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface SearchedProductProps {
   product: ProductInterface;
@@ -25,7 +26,7 @@ const SearchedProduct: React.FC<SearchedProductProps> = ({ product }) => {
 
   return (
     <div className="flex bg-white w-full justify-between items-center py-4 z-50">
-      <img src={product.image} alt={product.name} className="w-16 h-16" />
+      <Image src={product.image} alt={product.name} width={64} height={64} />
       <p>{product.name}</p>
       <p>{product.price} zł</p>
       <Button onClick={() => handleAddToCartButtonClick(product)}>
