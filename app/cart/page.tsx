@@ -5,15 +5,14 @@ import CartItem from "./components/CartItem";
 import SummaryCart from "./components/SummaryCart";
 import { RootState } from "../store/store";
 import { ProductWithQuantity } from "../types/types";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const cart = useSelector((state: RootState) => state.cart.value);
 
-  if (cart.length === 0) {
+  if (!cart || cart.length === 0) {
     return (
-      <h2 className="text-3xl text-center py-16">Twój koszyk jest pusty</h2>
+      <h3 className="text-3xl text-center py-16">Twój koszyk jest pusty</h3>
     );
   }
 

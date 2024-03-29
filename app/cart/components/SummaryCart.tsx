@@ -13,7 +13,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import toast from "react-hot-toast";
 
 const SummaryCart = () => {
-  const cart = useSelector((state: RootState) => state.cart.value);
   const [publishStripeKey, setPublishStripeKey] = useState("");
   const session = useSession();
   const email = session.data?.user?.email;
@@ -42,14 +41,21 @@ const SummaryCart = () => {
 
   const router = useRouter();
 
+  const cart = useSelector((state: RootState) => state.cart.value);
+
+  console.log(cart);
+
   const getTotalPrice = () => {
-    return cart
-      .reduce(
-        (acc: number, item: ProductWithQuantity) =>
-          acc + item.price * item.quantity,
-        0
-      )
-      .toFixed(2);
+    return (
+      cart &&
+      cart
+        .reduce(
+          (acc: number, item: ProductWithQuantity) =>
+            acc + item.price * item.quantity,
+          0
+        )
+        .toFixed(2)
+    );
   };
 
   const checkIfDiscountCodeIsValid = () => {
@@ -70,6 +76,10 @@ const SummaryCart = () => {
   const handlePaymentButtonClick = async () => {
     if (checkIfUserIsLogged()) {
       const stripe = await loadStripe(publishStripeKey);
+
+      console.log("cart", cart);
+      console.log("deliveryPrice", deliveryPrice);
+      console.log("email", email);
 
       const response = await axios.post(
         "/api/payments",

@@ -40,6 +40,13 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart") as string);
+    if (cart) {
+      dispatch(inicializeCart(cart));
+    }
+  }, []);
+
+  useEffect(() => {
     getCartQuantity();
   }, [cart]);
 

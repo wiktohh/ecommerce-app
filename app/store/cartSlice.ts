@@ -5,10 +5,7 @@ import { ProductWithQuantity } from "../types/types";
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    value:
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("cart") as string) || []
-        : [],
+    value: [] as ProductWithQuantity[],
   },
   reducers: {
     inicializeCart: (state, action) => {
@@ -55,7 +52,7 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
     numberOfItems: (state) => {
-      return state.value.reduce(
+      state.value.reduce(
         (acc: number, item: ProductWithQuantity) => acc + item.quantity,
         0
       );
