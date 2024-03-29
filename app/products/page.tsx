@@ -6,58 +6,32 @@ import { Suspense, useEffect, useState } from "react";
 import Button from "../components/Button";
 import LoadingSpinner from "../components/LoadingSpinner";
 import MobileFilterPanel from "./components/FilterPanel/MobileFilterPanel";
+import { useSearchParams } from "next/navigation";
 
 export type PriceSort = "asc" | "desc";
 
 const ProductsPage = () => {
+  const searchParams = useSearchParams();
+
   const [priceSort, setPriceSort] = useState<PriceSort>("asc");
   const [showMobileFilterPanel, setShowMobileFilterPanel] = useState(false);
 
-  const [categoryFromParameter, setCategoryFromParameter] = useState<
-    string | null
-  >(null);
-  const [shopFromParameter, setShopFromParameter] = useState<string | null>(
-    null
-  );
-
-  const sendParamsToParent = (
-    category: string | null,
-    shop: string | null,
-    categories: (string | null)[],
-    shops: (string | null)[]
-  ) => {
-    if (category) {
-      setCategoryFromParameter(category);
-    }
-    if (shop) {
-      setShopFromParameter(shop);
-    }
-    if (categories) {
-      setCategories(categories);
-    }
-    if (shops) {
-      setShops(shops);
-    }
-  };
-
-  console.log(priceSort);
-
-  const [categories, setCategories] = useState<(string | null)[]>([]);
-  const [shops, setShops] = useState<(string | null)[]>([]);
+  const [categories, setCategories] = useState<(string | null)[]>([
+    searchParams.get("category"),
+  ]);
+  const [shops, setShops] = useState<(string | null)[]>([
+    searchParams.get("shop"),
+  ]);
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    if (categoryFromParameter) {
-      setCategories([categoryFromParameter]);
-    }
-    if (shopFromParameter) {
-      setShops([shopFromParameter]);
-    }
-  }, [categoryFromParameter, shopFromParameter]);
 
   const changePriceSort = (value: PriceSort) => {
     setPriceSort(value);
   };
+
+  useEffect(() => {
+    setCategories([searchParams.get("category")]);
+    setShops([searchParams.get("shop")]);
+  }, [searchParams]);
 
   const applyFilter = (
     categories: (string | null)[],
@@ -67,23 +41,16 @@ const ProductsPage = () => {
     setShops(shops);
   };
 
-  const setFirstCurrentPage = () => {
-    setCurrentPage(1);
-  };
-
-  const openPanel = () => {
-    setShowMobileFilterPanel(true);
-  };
-
-  const closePanel = () => {
-    setShowMobileFilterPanel(false);
-  };
-
   return (
     <Wrapper>
       <div className="flex flex-col md:flex-row w-100 my-8">
         <div className="block w-1/3 md:hidden">
-          <Button fullWidth={true} onClick={openPanel}>
+          <Button
+            fullWidth={true}
+            onClick={() => {
+              setShowMobileFilterPanel(true);
+            }}
+          >
             Filtry
           </Button>
         </div>
@@ -96,8 +63,9 @@ const ProductsPage = () => {
               categories={categories}
               shops={shops}
               onFilterChange={applyFilter}
-              setFirstCurrentPage={setFirstCurrentPage}
-              sendParamsToParent={sendParamsToParent}
+              setFirstCurrentPage={() => {
+                setCurrentPage(1);
+              }}
             />
           </div>
           <div className="w-1/6 block md:hidden">
@@ -107,9 +75,12 @@ const ProductsPage = () => {
               categories={categories}
               shops={shops}
               onFilterChange={applyFilter}
-              setFirstCurrentPage={setFirstCurrentPage}
-              closePanel={closePanel}
-              sendParamsToParent={sendParamsToParent}
+              setFirstCurrentPage={() => {
+                setCurrentPage(1);
+              }}
+              closePanel={() => {
+                setShowMobileFilterPanel(false);
+              }}
               showFilterPanel={showMobileFilterPanel}
             />
           </div>

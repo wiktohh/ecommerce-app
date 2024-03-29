@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
 import { IoMdClose } from "react-icons/io";
 import { motion } from "framer-motion";
-import { handleFilter, sendParams } from "../../utilts";
+import { handleFilter } from "../../utilts";
 
 interface FilterPanelProps {
   changePriceSort: (value: PriceSort) => void;
@@ -19,12 +19,6 @@ interface FilterPanelProps {
   ) => void;
   setFirstCurrentPage: () => void;
   closePanel: () => void;
-  sendParamsToParent: (
-    category: string | null,
-    shop: string | null,
-    categories: (string | null)[],
-    shops: (string | null)[]
-  ) => void;
   showFilterPanel: boolean;
 }
 
@@ -34,7 +28,6 @@ const MobileFilterPanel: React.FC<FilterPanelProps> = ({
   onFilterChange,
   setFirstCurrentPage,
   closePanel,
-  sendParamsToParent,
   showFilterPanel,
   categories,
   shops,
@@ -43,10 +36,6 @@ const MobileFilterPanel: React.FC<FilterPanelProps> = ({
     ...categories,
   ]);
   const [localShops, setLocalShops] = useState<(string | null)[]>([...shops]);
-
-  const searchParams = useSearchParams();
-  const categoryFromParameter = searchParams.get("category");
-  const shopFromParameter = searchParams.get("shop");
 
   useEffect(() => {
     setLocalCategories([...categories]);
@@ -73,22 +62,6 @@ const MobileFilterPanel: React.FC<FilterPanelProps> = ({
       shopsOptions
     );
   };
-
-  useEffect(() => {
-    sendParams(
-      categoryFromParameter,
-      shopFromParameter,
-      localCategories,
-      localShops,
-      sendParamsToParent
-    );
-    if (categoryFromParameter) {
-      setLocalCategories([categoryFromParameter]);
-    }
-    if (shopFromParameter) {
-      setLocalShops([shopFromParameter]);
-    }
-  }, [categoryFromParameter, shopFromParameter]);
 
   const variants = {
     open: { x: "-100%" },

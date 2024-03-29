@@ -4,7 +4,7 @@ import { filterOptions, shopsOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PriceSort } from "../../page";
-import { handleFilter, sendParams } from "../../utilts";
+import { handleFilter } from "../../utilts";
 
 interface FilterPanelProps {
   changePriceSort: (value: PriceSort) => void;
@@ -16,12 +16,6 @@ interface FilterPanelProps {
     shops: (string | null)[]
   ) => void;
   setFirstCurrentPage: () => void;
-  sendParamsToParent: (
-    category: string | null,
-    shop: string | null,
-    categories: (string | null)[],
-    shops: (string | null)[]
-  ) => void;
 }
 
 type NullableString = string | null;
@@ -31,7 +25,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   priceSort,
   onFilterChange,
   setFirstCurrentPage,
-  sendParamsToParent,
   categories,
   shops,
 }) => {
@@ -40,32 +33,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   ]);
   const [localShops, setLocalShops] = useState<NullableString[]>([...shops]);
 
-  const searchParams = useSearchParams();
-  const categoryFromParameter = searchParams.get("category");
-  const shopFromParameter = searchParams.get("shop");
-
-  console.log(priceSort);
-
   useEffect(() => {
     setLocalCategories([...categories]);
     setLocalShops([...shops]);
   }, [categories, shops]);
-
-  useEffect(() => {
-    sendParams(
-      categoryFromParameter,
-      shopFromParameter,
-      localCategories,
-      localShops,
-      sendParamsToParent
-    );
-    if (categoryFromParameter) {
-      setLocalCategories([categoryFromParameter]);
-    }
-    if (shopFromParameter) {
-      setLocalShops([shopFromParameter]);
-    }
-  }, [categoryFromParameter, shopFromParameter]);
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>,

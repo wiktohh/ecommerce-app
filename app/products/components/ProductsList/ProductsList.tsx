@@ -27,26 +27,29 @@ const ProductsList: React.FC<ProductListProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [totalProducts, setTotalProducts] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const searchParams = useSearchParams();
 
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log("ProductsList", categories, shops);
       setIsLoading(true);
       const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
         "-"
       )}&category=${categories.join("-")}`;
+      console.log(url);
       const response = await axios.get(url);
       const data = await response.data;
-      setIsLoading(false);
       setTotalProducts(data.productsLength);
       setProducts(data.products);
+      setIsLoading(false);
     };
     if (categories.length > 0 || shops.length > 0) {
       fetchProducts();
     }
   }, [currentPage, itemsPerPage, priceSort, categories, shops]);
+
+  console.log(products);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {

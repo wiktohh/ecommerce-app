@@ -7,26 +7,6 @@ const toggleArrayItem = (array: (string | null)[], item: string | null) => {
     : [...array, item];
 };
 
-export const sendParams = (
-  categoryFromParameter: string | null,
-  shopFromParameter: string | null,
-  localCategories: (string | null)[],
-  localShops: (string | null)[],
-  sendParamsToParent: (
-    category: string | null,
-    shop: string | null,
-    categories: (string | null)[],
-    shops: (string | null)[]
-  ) => void
-) => {
-  sendParamsToParent(
-    categoryFromParameter,
-    shopFromParameter,
-    localCategories,
-    localShops
-  );
-};
-
 export const handleFilter = (
   value: string | PriceSort,
   localCategories: (string | null)[],
