@@ -7,7 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { demoAccount } from "../constants";
 
 type Variant = "login" | "register";
 
@@ -20,6 +20,7 @@ const AuthForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
@@ -73,6 +74,12 @@ const AuthForm = () => {
 
   const toggleVariant = () =>
     setVariant(variant === "login" ? "register" : "login");
+
+  const setDemoAccount = () => {
+    setValue("name", demoAccount.name);
+    setValue("email", demoAccount.email);
+    setValue("password", demoAccount.password);
+  };
 
   return (
     <div className="mx-auto w-full max-w-md bg-white px-4 py-8 shadow rounded-lg">
@@ -129,6 +136,14 @@ const AuthForm = () => {
           </p>
         </div>
       </form>
+      <div className="w-full flex justify-center mt-6 text-gray-500 hover:text-black">
+        <button
+          onClick={setDemoAccount}
+          className="outline-none border-none text-center mx-auto"
+        >
+          Try demo
+        </button>
+      </div>
     </div>
   );
 };

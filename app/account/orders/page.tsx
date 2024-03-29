@@ -31,6 +31,17 @@ const OrdersPage = () => {
     fetchOrders();
   }, [email]);
 
+  if (orders.length === 0) {
+    return (
+      <div className="w-full mx-auto">
+        <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
+        <div className="flex justify-center">
+          <p className="text-xl">Brak zamówień</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full mx-auto">
       <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
