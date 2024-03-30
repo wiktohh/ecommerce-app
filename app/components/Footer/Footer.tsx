@@ -85,10 +85,6 @@ const Footer = () => {
           name: "Dokumentacja",
           url: "/docs",
         },
-        {
-          name: "Pomoc",
-          url: "/help",
-        },
       ],
     },
   ];
@@ -106,6 +102,7 @@ const Footer = () => {
               <div className="flex gap-3 justify-center md:justify-start">
                 {socials.map((social) => (
                   <div
+                    data-testid="social-icon"
                     className="my-2 hover:text-orange-500 cursor-pointer"
                     key={social.id}
                   >
@@ -134,7 +131,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <p className="text-center md:text-left">
+        <p
+          data-testid="current-year-section"
+          className="text-center md:text-left"
+        >
           © {getCurrentYear()} by Wiktor Rzeźnicki
         </p>
       </footer>

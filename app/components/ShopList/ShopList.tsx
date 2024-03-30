@@ -26,10 +26,12 @@ const ShopList = () => {
 
   return (
     <Wrapper>
-      <h3 className="pt-12 md:pt-20 text-2xl">Dostępne sklepy</h3>
+      <h3 data-testid="shop-list-header" className="pt-12 md:pt-20 text-2xl">
+        Dostępne sklepy
+      </h3>
       <div className="pt-8 flex flex-col items-center gap-4 flex-wrap md:flex-row justify-around">
         {tmpShops.map((shop) => (
-          <div key={shop.id} className="relative">
+          <div data-testid="shop" key={shop.id} className="relative">
             <Link
               href={`/products?shop=${shop.name}`}
               className="cursor-pointer"

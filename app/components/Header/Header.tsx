@@ -15,7 +15,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { Suspense, use, useEffect, useLayoutEffect, useState } from "react";
 import MobileMenu from "./MobileMenu";
-import { useCycle } from "framer-motion";
 import { inicializeCart, numberOfItems } from "@/app/store/cartSlice";
 import LoadingSpinner from "../LoadingSpinner";
 
@@ -59,7 +58,7 @@ const Header = () => {
       <Wrapper>
         <div className="w-full flex flex-col justify-between py-4">
           <div className="h-1/2 flex justify-between md:justify-evenly lg:justify-between items-center">
-            <Link href="/">
+            <Link data-testid="heading-title" href="/">
               <h1 className="font-semibold text-orange-500 text-2xl">
                 FoodieMarket
               </h1>
@@ -67,18 +66,21 @@ const Header = () => {
             <Searchbar />
             {!isMobileMenuOpen ? (
               <GiHamburgerMenu
+                data-testid="mobile-menu"
                 className="text-3xl cursor-pointer md:hidden hover:text-orange-500"
                 onClick={toggleMobileMenu}
               />
             ) : (
               <IoMdClose
+                data-testid="close-mobile-menu"
                 className="text-3xl cursor-pointer md:hidden  hover:text-orange-500"
                 onClick={toggleMobileMenu}
               />
             )}
             <div className="hidden md:flex gap-8">
-              <button
-                onClick={handleCartClick}
+              <Link
+                data-testid="cart-button"
+                href={"/cart"}
                 className="flex items-center gap-1 hover:text-orange-500 cursor-pointer"
               >
                 <FiShoppingCart className="text-2xl" />
@@ -91,7 +93,7 @@ const Header = () => {
                     {cartQuantity}
                   </span>
                 )}
-              </button>
+              </Link>
               {session.status === "authenticated" ? (
                 <div className="flex gap-8">
                   <Link
@@ -101,7 +103,9 @@ const Header = () => {
                     <MdOutlineAccountCircle className="text-3xl" />
                     <p>Konto</p>
                   </Link>
-                  <Button onClick={() => signOut()}>Wyloguj się</Button>
+                  <Button data-testid="logout-button" onClick={() => signOut()}>
+                    Wyloguj się
+                  </Button>
                 </div>
               ) : (
                 <Link

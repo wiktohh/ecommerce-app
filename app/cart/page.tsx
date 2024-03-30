@@ -17,7 +17,10 @@ const CartPage = () => {
   }
 
   return (
-    <div className="w-full md:w-1/2 mx-auto flex flex-col lg:flex-row lg:justify-between items-center lg:items-start gap-8 my-8">
+    <div
+      data-testid="cart-page"
+      className="w-full md:w-1/2 mx-auto flex flex-col lg:flex-row lg:justify-between items-center lg:items-start gap-8 my-8"
+    >
       <div className="min-w-max w-2/3 flex flex-col justify-between items-center">
         {cart.map((item: ProductWithQuantity, idx: number) => (
           <CartItem item={item} key={idx} />

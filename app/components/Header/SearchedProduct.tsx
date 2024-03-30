@@ -25,7 +25,10 @@ const SearchedProduct: React.FC<SearchedProductProps> = ({ product }) => {
   };
 
   return (
-    <div className="flex bg-white w-full justify-between items-center py-4 z-50">
+    <div
+      data-testid="searched-item"
+      className="flex bg-white w-full justify-between items-center py-4 z-50"
+    >
       <Image src={product.image} alt={product.name} width={64} height={64} />
       <p>{product.name}</p>
       <p>{product.price} zł</p>
