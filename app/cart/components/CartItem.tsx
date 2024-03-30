@@ -33,8 +33,10 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         className="border-4 border-orange-400"
         alt="product image"
       />
-      <span className="w-1/4 text-center">{item.name}</span>
-      <div className="flex flex-col-reverse md:flex-row w-1/3 items-center gap-1">
+      <span className="w-1/4 text-sm px-2 md:text-base text-center">
+        {item.name}
+      </span>
+      <div className="flex flex-col-reverse px-2 md:flex-row w-1/3 items-center gap-1">
         <button onClick={() => dispatch(decreaseQuantity(item.name))}>
           <CiCircleMinus className="text-3xl hover:text-orange-600" />
         </button>
