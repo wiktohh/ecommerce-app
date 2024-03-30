@@ -87,7 +87,9 @@ const ProductsList: React.FC<ProductListProps> = ({
           </div>
         ) : products.length === 0 ? (
           <div>
-            <h3 className="text-xl text-center">Brak produktów</h3>
+            <h3 data-testid="no-products-info" className="text-xl text-center">
+              Brak produktów
+            </h3>
           </div>
         ) : (
           <>
