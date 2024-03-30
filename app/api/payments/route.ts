@@ -8,9 +8,16 @@ import path from "path";
 
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession({ req, ...authOptions });
+    if (!session) {
+      return NextResponse.json(
+        { error: "Nie jesteś zalogowany" },
+        { status: 401 }
+      );
+    }
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-    const { email, cart, deliveryPrice } = await req.json();
+    const { cart, deliveryPrice } = await req.json();
 
     const lineItems = cart.map((item: ProductWithQuantity) => ({
       price_data: {
@@ -46,7 +53,7 @@ export async function POST(req: Request) {
 
     const newOrder = await prisma.order.create({
       data: {
-        userId: email as string,
+        userId: session.user?.email as string,
         total:
           cart.reduce(
             (acc: number, item: ProductWithQuantity) =>

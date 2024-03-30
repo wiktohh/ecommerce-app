@@ -79,11 +79,10 @@ const SummaryCart = () => {
 
       console.log("cart", cart);
       console.log("deliveryPrice", deliveryPrice);
-      console.log("email", email);
 
       const response = await axios.post(
         "/api/payments",
-        { cart, deliveryPrice, email },
+        { cart, deliveryPrice },
         {
           headers: {
             "Content-Type": "application/json",
@@ -96,6 +95,7 @@ const SummaryCart = () => {
       });
       if (result && !result.error) {
         dispatch(resetCart());
+        localStorage.removeItem("cart");
       }
     } else {
       router.push("/auth");

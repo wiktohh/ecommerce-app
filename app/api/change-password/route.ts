@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/app/lib/prisma";
-
+import { authOptions } from "@/app/lib/auth";
+import { getServerSession } from "next-auth";
 export async function PATCH(req: Request) {
   try {
+    const session = await getServerSession({ req, ...authOptions });
+    if (!session) {
+      return NextResponse.json(
+        { error: "Nie jesteś zalogowany" },
+        { status: 401 }
+      );
+    }
     const { email, currentPassword, repeatCurrentPassword, newPassword } =
       await req.json();
 
