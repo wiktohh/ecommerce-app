@@ -54,7 +54,7 @@ const ProductsSlider: React.FC<ProductsSliderProps> = ({ products }) => {
   }, []);
 
   return (
-    <Slider {...settings} className="w-4/5 mx-auto md:w-full">
+    <Slider {...settings} className="w-4/5 mx-auto md:w-full cursor-grab">
       {products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
