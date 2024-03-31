@@ -90,13 +90,11 @@ const SummaryCart = () => {
         }
       );
       const session = await response.data;
-      const result = await stripe?.redirectToCheckout({
+      await stripe?.redirectToCheckout({
         sessionId: session.id,
       });
-      if (result && !result.error) {
-        dispatch(resetCart());
-        localStorage.removeItem("cart");
-      }
+      dispatch(resetCart());
+      localStorage.removeItem("cart");
     } else {
       router.push("/auth");
     }
