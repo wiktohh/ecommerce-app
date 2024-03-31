@@ -141,7 +141,7 @@ const AuthForm = () => {
           onClick={setDemoAccount}
           className="outline-none border-none text-center mx-auto"
         >
-          Try demo
+          Wersja demo
         </button>
       </div>
     </div>
