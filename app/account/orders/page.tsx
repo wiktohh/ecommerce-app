@@ -36,6 +36,14 @@ const OrdersPage = () => {
     fetchOrders();
   }, [email]);
 
+  if (isLoading) {
+    return (
+      <div className="w-full flex justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   if (error) {
     return <div className="text-red-500 text-center text-xl mt-4">{error}</div>;
   }
@@ -54,11 +62,6 @@ const OrdersPage = () => {
   return (
     <div className="w-full mx-auto">
       <h2 className="text-2xl font-bold mb-6">Zamówienia</h2>
-      {isLoading && (
-        <div className="flex justify-center">
-          <LoadingSpinner />
-        </div>
-      )}
       <div className="w-full mx-auto">
         {!isLoading &&
           orders.map((order: any) => <Order key={order.id} order={order} />)}
