@@ -49,7 +49,10 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         <span className="flex gap-1">
           <span className="hidden md:block">Cena: </span> {item.price}zł
         </span>
-        <button onClick={() => removeFromCartHandler(item.name)}>
+        <button
+          data-testid="remove-btn"
+          onClick={() => removeFromCartHandler(item.name)}
+        >
           <FaTrash className="text-2xl" />
         </button>
       </div>
