@@ -7,6 +7,7 @@ import Button from "@/app/components/Button";
 import Select from "@/app/components/Select";
 import { itemsPerPageOptions } from "./constants";
 import { useSearchParams } from "next/navigation";
+import { set } from "react-hook-form";
 
 interface ProductListProps {
   priceSort: "asc" | "desc";
@@ -25,6 +26,7 @@ const ProductsList: React.FC<ProductListProps> = ({
 }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [totalProducts, setTotalProducts] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -34,22 +36,29 @@ const ProductsList: React.FC<ProductListProps> = ({
     const fetchProducts = async () => {
       console.log("ProductsList", categories, shops);
       setIsLoading(true);
-      const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
-        "-"
-      )}&category=${categories.join("-")}`;
-      console.log(url);
-      const response = await axios.get(url);
-      const data = await response.data;
-      setTotalProducts(data.productsLength);
-      setProducts(data.products);
-      setIsLoading(false);
+      try {
+        const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
+          "-"
+        )}&category=${categories.join("-")}`;
+        console.log(url);
+        const response = await axios.get(url);
+        const data = await response.data;
+        setTotalProducts(data.productsLength);
+        setProducts(data.products);
+        setIsLoading(false);
+      } catch (error) {
+        setError("Wystąpił błąd podczas pobierania produktów");
+        setIsLoading(false);
+      }
     };
+
     if (categories.length > 0 || shops.length > 0) {
       fetchProducts();
     }
   }, [currentPage, itemsPerPage, priceSort, categories, shops]);
 
   console.log(products);
+  console.log(error);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -67,6 +76,14 @@ const ProductsList: React.FC<ProductListProps> = ({
     setCurrentPage(1);
     setItemsPerPage(Number(value));
   };
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center text-xl md:w-5/6 mt-4">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="md:w-5/6">

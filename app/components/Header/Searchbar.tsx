@@ -5,6 +5,8 @@ import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import SearchedProduct from "./SearchedProduct";
 import { ProductInterface } from "@/app/types/types";
+import { set } from "react-hook-form";
+import LoadingSpinner from "../LoadingSpinner";
 
 const categories = [
   { label: "Wszystkie", value: "all" },
@@ -25,6 +27,7 @@ const Searchbar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState<string>("all");
   const [query, setQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchedProducts, setSearchedProducts] = useState<SearchedProducts>();
 
   useEffect(() => {
@@ -45,6 +48,7 @@ const Searchbar = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       if (query.length > 2) {
         const response = await axios.post(
           "/api/products/search",
@@ -58,6 +62,7 @@ const Searchbar = () => {
           setSearchedProducts(data);
         }
       }
+      setIsLoading(false);
     };
     fetchProducts();
   }, [category, query]);
@@ -93,6 +98,14 @@ const Searchbar = () => {
           <FaSearch className="text-base text-black" />
         </button>
       </div>
+      {isLoading && (
+        <div
+          ref={searchRef}
+          className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
+        >
+          <LoadingSpinner />
+        </div>
+      )}
       {query.length > 0 && query.length < 3 && (
         <div
           ref={searchRef}

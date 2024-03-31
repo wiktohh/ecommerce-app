@@ -5,7 +5,6 @@ import CartItem from "./components/CartItem";
 import SummaryCart from "./components/SummaryCart";
 import { RootState } from "../store/store";
 import { ProductWithQuantity } from "../types/types";
-import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const cart = useSelector((state: RootState) => state.cart.value);

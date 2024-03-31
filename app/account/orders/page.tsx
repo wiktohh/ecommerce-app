@@ -12,24 +12,33 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const session = useSession();
+  const [error, setError] = useState<string | null>(null);
   const email = session.data?.user?.email;
 
   useEffect(() => {
     const fetchOrders = async () => {
       setIsLoading(true);
-      if (email) {
-        const response = await axios.post(
-          "/api/orders",
-          { email },
-          { headers: { "Content-Type": "application/json" } }
-        );
-        const data = await response.data;
-        setOrders(data);
+      try {
+        if (email) {
+          const response = await axios.post(
+            "/api/orders",
+            { email },
+            { headers: { "Content-Type": "application/json" } }
+          );
+          const data = await response.data;
+          setOrders(data);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setError("Wystąpił błąd podczas pobierania historii zamówień");
       }
-      setIsLoading(false);
     };
     fetchOrders();
   }, [email]);
+
+  if (error) {
+    return <div className="text-red-500 text-center text-xl mt-4">{error}</div>;
+  }
 
   if (orders.length === 0) {
     return (
