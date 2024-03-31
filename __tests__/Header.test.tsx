@@ -18,7 +18,7 @@ vi.mock("next/navigation", () => ({
 vi.mock("axios");
 
 vi.mock("react-redux", () => ({
-  Provider: ({ children }: { children: ReactNode }) => <>{children}</>, // Dodaj Provider
+  Provider: ({ children }: { children: ReactNode }) => <>{children}</>,
   useSelector: () => [
     { id: 1, name: "Item 1", quantity: 1 },
     { id: 2, name: "Item 2", quantity: 2 },
