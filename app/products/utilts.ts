@@ -21,8 +21,6 @@ export const handleFilter = (
   const allShops = [...shopsOptions, "allShops"];
   setFirstCurrentPage();
 
-  console.log(value);
-
   if (value === "asc" || value === "desc") {
     changePriceSort(value);
     return;

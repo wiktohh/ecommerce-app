@@ -43,8 +43,6 @@ export async function POST(req: Request) {
       });
     }
 
-    console.log(session.user?.email);
-
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -83,7 +81,6 @@ export async function POST(req: Request) {
     if (!newOrder) {
       throw new Error("Nie udało się utworzyć zamówienia");
     }
-    console.log(checkoutSession);
     return NextResponse.json({ id: checkoutSession.id }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });

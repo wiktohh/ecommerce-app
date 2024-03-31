@@ -43,8 +43,6 @@ const SummaryCart = () => {
 
   const cart = useSelector((state: RootState) => state.cart.value);
 
-  console.log(cart);
-
   const getTotalPrice = () => {
     return (
       cart &&
@@ -76,9 +74,6 @@ const SummaryCart = () => {
   const handlePaymentButtonClick = async () => {
     if (checkIfUserIsLogged()) {
       const stripe = await loadStripe(publishStripeKey);
-
-      console.log("cart", cart);
-      console.log("deliveryPrice", deliveryPrice);
 
       const response = await axios.post(
         "/api/payments",

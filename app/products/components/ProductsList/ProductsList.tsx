@@ -34,13 +34,11 @@ const ProductsList: React.FC<ProductListProps> = ({
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("ProductsList", categories, shops);
       setIsLoading(true);
       try {
         const url = `/api/products?page=${currentPage}&limit=${itemsPerPage}&sort=${priceSort}&shop=${shops.join(
           "-"
         )}&category=${categories.join("-")}`;
-        console.log(url);
         const response = await axios.get(url);
         const data = await response.data;
         setTotalProducts(data.productsLength);
@@ -56,9 +54,6 @@ const ProductsList: React.FC<ProductListProps> = ({
       fetchProducts();
     }
   }, [currentPage, itemsPerPage, priceSort, categories, shops]);
-
-  console.log(products);
-  console.log(error);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
