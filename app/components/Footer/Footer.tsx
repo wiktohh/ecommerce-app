@@ -117,13 +117,12 @@ const Footer = () => {
                   <h6 className="mb-4 font-semibold">{item.title}</h6>
                   <ul className="md:flex md:flex-col">
                     {item.links.map((link) => (
-                      <Link
-                        className="hover:text-red-500"
-                        href={link.url}
+                      <p
+                        className="hover:text-red-500 cursor-pointer"
                         key={link.url}
                       >
                         {link.name}
-                      </Link>
+                      </p>
                     ))}
                   </ul>
                 </div>
