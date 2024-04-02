@@ -31,7 +31,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         width={128}
         height={128}
         className="border-4 border-orange-400"
-        alt="product image"
+        alt={`${item.name} image`}
       />
       <span className="w-1/4 text-sm px-2 md:text-base text-center">
         {item.name}

@@ -41,7 +41,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           </Button>
         </div>
       )}
-      <Image src={product.image} alt="product image" width={96} height={96} />
+      <Image
+        src={product.image}
+        alt={`${product.image} product`}
+        width={96}
+        height={96}
+      />
       <div>
         <h3>{product.name}</h3>
         <p>{product.price}</p>

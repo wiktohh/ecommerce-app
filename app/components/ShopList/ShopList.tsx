@@ -41,7 +41,7 @@ const ShopList = () => {
                 height={350}
                 className="rounded-2xl"
                 src={shop.image}
-                alt="Shop"
+                alt={`${shop.name} image`}
               />
               <div className="absolute inset-0 bg-black opacity-0 rounded-2xl transition-opacity hover:opacity-40" />
             </Link>

@@ -29,7 +29,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
             <div className="flex items-center gap-4">
               <Image
                 src={product.image}
-                alt={product.name}
+                alt={`${product.name} image`}
                 width={64}
                 height={64}
                 className="object-cover"
