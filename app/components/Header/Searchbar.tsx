@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Select from "../Select";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
@@ -29,6 +29,7 @@ const Searchbar = () => {
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchedProducts, setSearchedProducts] = useState<SearchedProducts>();
+  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,6 +37,8 @@ const Searchbar = () => {
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)
       ) {
+        setIsDropdownVisible(false);
+        setQuery("");
         setSearchedProducts(undefined);
       }
     };
@@ -62,6 +65,7 @@ const Searchbar = () => {
           setSearchedProducts(data);
         }
       }
+      setIsDropdownVisible(true);
       setIsLoading(false);
     };
     fetchProducts();
@@ -74,6 +78,12 @@ const Searchbar = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("is visible", isDropdownVisible);
+    console.log(searchRef.current);
+    console.log("query", query);
+  }, [isDropdownVisible, query]);
 
   return (
     <div
@@ -98,15 +108,7 @@ const Searchbar = () => {
           <FaSearch className="text-base text-black" />
         </button>
       </div>
-      {isLoading && (
-        <div
-          ref={searchRef}
-          className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
-        >
-          <LoadingSpinner />
-        </div>
-      )}
-      {query.length > 0 && query.length < 3 && (
+      {isDropdownVisible && query.length > 0 && query.length < 3 && (
         <div
           ref={searchRef}
           className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
@@ -114,25 +116,32 @@ const Searchbar = () => {
           Wpisz co najmniej 3 litery
         </div>
       )}
-      {query.length >= 3 && searchedProducts === NOT_FOUND && (
-        <div
-          ref={searchRef}
-          className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
-        >
-          Brak wyników
-        </div>
-      )}
-      {query.length >= 3 &&
-        Array.isArray(searchedProducts) &&
-        searchedProducts.length > 0 && (
+      {isDropdownVisible &&
+        query.length >= 3 &&
+        searchedProducts === NOT_FOUND && (
           <div
             ref={searchRef}
-            className="absolute top-8 w-full bg-white px-2 py-4 rounded-xl shadow-lg my-1"
+            className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
           >
-            {searchedProducts.map((product: ProductInterface, idx: number) => (
-              <SearchedProduct key={idx} product={product} />
-            ))}
+            Brak wyników
           </div>
+        )}
+      {isDropdownVisible &&
+        query.length >= 3 &&
+        Array.isArray(searchedProducts) &&
+        searchedProducts.length > 0 && (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div
+              ref={searchRef}
+              className="absolute top-8 w-full bg-white px-2 py-4 rounded-xl shadow-lg my-1"
+            >
+              {searchedProducts.map(
+                (product: ProductInterface, idx: number) => (
+                  <SearchedProduct key={idx} product={product} />
+                )
+              )}
+            </div>
+          </Suspense>
         )}
     </div>
   );
