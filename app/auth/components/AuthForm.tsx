@@ -6,7 +6,7 @@ import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { demoAccount } from "../constants";
 
 type Variant = "login" | "register";
@@ -46,7 +46,7 @@ const AuthForm = () => {
           if (cb?.error) {
             setError(cb.error);
           } else if (cb?.ok) {
-            router.back();
+            router.push("/");
           }
         })
         .finally(() => {
@@ -60,7 +60,7 @@ const AuthForm = () => {
           if (cb?.error) {
             setError(cb.error);
           } else if (cb?.ok) {
-            router.back();
+            router.push("/");
           }
         })
         .catch((err) => {
