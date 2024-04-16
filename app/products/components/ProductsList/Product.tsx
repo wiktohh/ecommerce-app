@@ -47,9 +47,9 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         width={96}
         height={96}
       />
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <h3>{product.name}</h3>
-        <p>{product.price}</p>
+        <p>{product.price}zł</p>
       </div>
     </div>
   );
