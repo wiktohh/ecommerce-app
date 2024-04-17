@@ -75,15 +75,16 @@ const Searchbar = () => {
     setCategory(value);
   };
 
+  useEffect(() => {
+    if (query.length === 0) {
+      setIsDropdownVisible(false);
+      setSearchedProducts(undefined);
+    }
+  }, [query]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-
-  useEffect(() => {
-    console.log("is visible", isDropdownVisible);
-    console.log(searchRef.current);
-    console.log("query", query);
-  }, [isDropdownVisible, query]);
 
   return (
     <div
@@ -108,6 +109,14 @@ const Searchbar = () => {
           <FaSearch className="text-base text-black" />
         </button>
       </div>
+      {isLoading && (
+        <div
+          ref={searchRef}
+          className="absolute top-8 w-full text-center bg-white px-2 py-4 rounded-xl shadow-lg my-1"
+        >
+          <LoadingSpinner />
+        </div>
+      )}
       {isDropdownVisible && query.length > 0 && query.length < 3 && (
         <div
           ref={searchRef}
